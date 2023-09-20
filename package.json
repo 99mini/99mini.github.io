@@ -2,11 +2,11 @@
   "name": "github-blog",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://https://99mini.github.io/",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "next build && next export",
+    "serve": "npx http-server out"
   },
   "dependencies": {
     "@types/node": "20.6.0",
