@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
-    "serve": "npx http-server out"
+    "predeploy": "npm run build",
+    "deploy": "touch out/.nojekyll && gh-pages -d out --dotfiles"
   },
   "dependencies": {
     "@types/node": "20.6.0",
@@ -18,5 +19,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.0.0"
   }
 }
