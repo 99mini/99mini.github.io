@@ -10,6 +10,8 @@
   bottom: header.$header-height;
   right: variables.$page-padding;
 
+  background-color: colors.$white-pure;
+
   @media (max-width: breakpoint.$mobile) {
     padding: variables.$page-padding-mobile;
     right: variables.$page-padding-mobile;
