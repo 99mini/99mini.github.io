@@ -4,18 +4,15 @@
 @use "/src/sass/layout/breakpoint";
 
 .asideNavbar {
-  position: fixed;
-  top: header.$header-height;
-  right: variables.$page-padding;
-
-  @media (max-width: breakpoint.$mobile) {
-    right: variables.$page-padding-mobile;
-  }
-
   .contentWrapper {
+    position: fixed;
+    top: header.$header-height;
+    right: variables.$page-padding;
     padding: variables.$page-padding;
+
     @media (max-width: breakpoint.$mobile) {
       padding: variables.$page-padding-mobile;
+      right: variables.$page-padding-mobile;
     }
   }
 }

@@ -51,13 +51,20 @@
 
       &:first-child {
         justify-content: flex-start;
+        .navItem {
+          padding-left: 0;
+        }
       }
 
       &:last-child {
         justify-content: flex-end;
+        .navItem {
+          padding-right: 0;
+        }
       }
 
       .navItem {
+        padding: 0 12px;
         &:hover {
           color: colors.$font-color-light;
         }
@@ -67,7 +74,6 @@
         }
 
         .linkItem {
-          padding: 0 12px;
           display: block;
         }
       }
