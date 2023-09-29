@@ -1,5 +1,4 @@
-import { MainSection } from "../containers/MainSection";
-import { SideNavbar } from "../containers/SideNavbar";
+import { SideNavbar, MainSection } from "../containers";
 import "./page.scss";
 
 export default function Home() {
