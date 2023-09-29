@@ -1,21 +1,37 @@
 "use client";
 import React, { useState } from "react";
 import "./Header.scss";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const pathList = {
-  home: "",
+  // home: "",
   about: "about",
   post: "post",
   pratice: "pratice",
 } as const;
 
 type pathKeyType = keyof typeof pathList;
-type pathValueType = (typeof pathList)[pathKeyType];
 
 const Header = () => {
+  const handleMenu = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {};
+
   return (
     <header className="header">
       <nav className="navContainer">
+        <ul className="navItemList">
+          <li className="navItem">
+            <button className="linkItem" onClick={handleMenu}>
+              <MenuIcon />
+            </button>
+          </li>
+          <li className="navItem">
+            <a href="/" className="linkItem">
+              {"0mini99.dev"}
+            </a>
+          </li>
+        </ul>
         <ul className="navItemList">
           {Object.keys(pathList).map((pathKey) => {
             const path = pathKey as pathKeyType;

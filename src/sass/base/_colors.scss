@@ -2,13 +2,15 @@
 $-black-light: rgb(77, 77, 77);
 $-black-normal: rgb(30, 30, 30);
 $-black-bold: rgb(22, 22, 22);
-$-black-pure: rgb(0, 0, 0);
+
+$black-pure: rgb(0, 0, 0);
 
 // white palette
 $-white-light: rgb(220, 220, 220);
 $-white-normal: rgb(233, 233, 233);
 $-white-bold: rgb(246, 246, 246);
-$-white-pure: rgb(255, 255, 255);
+
+$white-pure: rgb(255, 255, 255);
 
 // border-color
 $border-color-light: $-black-light;
