@@ -1,12 +1,13 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export async function GET(request: NextRequest) {
-  const token = request.cookies.get("token");
-  const data = {
-    status: 200,
-    data: {
-      token: token,
-    },
-  };
-  return NextResponse.json(data);
+export async function GET() {
+  try {
+    const res = { message: "hello" };
+
+    const data = res;
+    console.log(res);
+    return Response.json({ data });
+  } catch (error) {
+    return Response.json({ error });
+  }
 }
