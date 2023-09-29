@@ -29,7 +29,7 @@
   color: colors.$font-color-normal;
   background-color: colors.$white-pure;
 
-  border-bottom: 2px solid colors.$border-color-light;
+  border-bottom: 2px solid colors.$border-color-black-light;
 
   @include animations.hover-transition-color;
 
