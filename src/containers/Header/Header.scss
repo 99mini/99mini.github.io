@@ -1,14 +1,23 @@
 @use "/src/sass/layout/header";
+
+@use "/src/sass/abstracts/variables";
+
 @use "/src/sass/base/typography";
 @use "/src/sass/base/colors";
 @use "/src/sass/base/animations";
+
+@use "/src/sass/layout/breakpoint";
 
 .header {
   width: 100%;
   height: header.$header-height;
 
   box-sizing: border-box;
-  padding: 8px;
+  padding: 8px variables.$page-padding;
+
+  @media (max-width: breakpoint.$mobile) {
+    padding: variables.$page-padding-mobile;
+  }
 
   position: sticky;
   top: 0;
@@ -20,7 +29,7 @@
   color: colors.$font-color-normal;
   background-color: colors.$white-pure;
 
-  border-bottom: 2px solid colors.$border-color-light;
+  border-bottom: 2px solid colors.$border-color-black-light;
 
   @include animations.hover-transition-color;
 
@@ -42,13 +51,20 @@
 
       &:first-child {
         justify-content: flex-start;
+        .navItem {
+          padding-left: 0;
+        }
       }
 
       &:last-child {
         justify-content: flex-end;
+        .navItem {
+          padding-right: 0;
+        }
       }
 
       .navItem {
+        padding: 0 12px;
         &:hover {
           color: colors.$font-color-light;
         }
@@ -58,7 +74,6 @@
         }
 
         .linkItem {
-          padding: 0 12px;
           display: block;
         }
       }

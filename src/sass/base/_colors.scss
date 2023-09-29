@@ -13,10 +13,17 @@ $-white-bold: rgb(246, 246, 246);
 $white-pure: rgb(255, 255, 255);
 
 // border-color
-$border-color-light: $-black-light;
-$border-color-normal: $-black-normal;
-$border-color-bold: $-black-bold;
+$border-color-black-light: $-black-light;
+$border-color-black-normal: $-black-normal;
+$border-color-black-bold: $-black-bold;
+
+$border-color-white-light: $-white-light;
+$border-color-white-normal: $-white-normal;
+$border-color-white-bold: $-white-bold;
 
 // font-color
 $font-color-light: $-black-light;
 $font-color-normal: $-black-normal;
+
+// disable
+$disable-color: $-white-light;
