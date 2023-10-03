@@ -1,6 +1,7 @@
 import "./Footer.scss";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import Link from "next/link";
 
 const linkIconList = {
   github: <GitHubIcon key={"github-icon"} />,
@@ -31,8 +32,15 @@ const Footer = () => {
             </a>
           </li>
         </ul>
+        <ul className="descriptionList">
+          <li>
+            <Link href={"/release"}>{"릴리즈 노트"}</Link>
+          </li>
+        </ul>
         <li>
-          <span>© 2023 99mini. All Rights Reserved.</span>
+          <span className="copyRight">
+            {"© 2023 99mini. All Rights Reserved."}
+          </span>
         </li>
       </ul>
     </footer>
