@@ -1,0 +1,47 @@
+@use "/src/sass/abstracts/variables";
+
+@use "/src/sass/base/colors";
+
+@use "/src/sass/layout/header";
+@use "/src/sass/layout/breakpoint";
+
+.asideNavbar {
+  position: fixed;
+  bottom: header.$header-height;
+  right: variables.$page-padding;
+
+  background-color: colors.$white-pure;
+
+  @media (max-width: breakpoint.$mobile) {
+    padding: variables.$page-padding-mobile;
+    right: variables.$page-padding-mobile;
+  }
+  .contentWrapper {
+    .buttonList {
+      .buttonItem {
+        width: 38px;
+        height: 38px;
+
+        box-sizing: border-box;
+        border: 1px solid colors.$border-color-white-light;
+
+        &:last-child {
+          border-top: none;
+        }
+
+        .moveToButton {
+          width: 100%;
+          height: 100%;
+
+          &:disabled {
+            color: colors.$disable-color;
+          }
+          svg {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}

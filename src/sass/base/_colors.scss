@@ -1,0 +1,29 @@
+// black palette
+$-black-light: rgb(77, 77, 77);
+$-black-normal: rgb(30, 30, 30);
+$-black-bold: rgb(22, 22, 22);
+
+$black-pure: rgb(0, 0, 0);
+
+// white palette
+$-white-light: rgb(220, 220, 220);
+$-white-normal: rgb(233, 233, 233);
+$-white-bold: rgb(246, 246, 246);
+
+$white-pure: rgb(255, 255, 255);
+
+// border-color
+$border-color-black-light: $-black-light;
+$border-color-black-normal: $-black-normal;
+$border-color-black-bold: $-black-bold;
+
+$border-color-white-light: $-white-light;
+$border-color-white-normal: $-white-normal;
+$border-color-white-bold: $-white-bold;
+
+// font-color
+$font-color-light: $-black-light;
+$font-color-normal: $-black-normal;
+
+// disable
+$disable-color: $-white-light;

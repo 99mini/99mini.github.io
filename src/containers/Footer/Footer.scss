@@ -1,0 +1,62 @@
+@use "/src/sass/abstracts/variables";
+
+@use "/src/sass/layout/footer";
+@use "/src/sass/layout/breakpoint";
+
+@use "/src/sass/base/typography";
+@use "/src/sass/base/colors";
+
+.footer {
+  padding: variables.$page-padding;
+
+  @media (max-width: breakpoint.$mobile) {
+    padding: variables.$page-padding-mobile;
+  }
+
+  background-color: colors.$white-pure;
+
+  border-top: 2px solid colors.$border-color-black-light;
+
+  font-weight: typography.$font-weight-light;
+  font-size: typography.$font-size-md;
+  line-height: typography.$line-height-default;
+
+  .footerItemList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    .iconList {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+
+      color: colors.$font-color-normal;
+    }
+    .descriptionList {
+      display: flex;
+      flex-direction: row;
+      color: colors.$font-color-light;
+
+      li {
+        &:hover {
+          color: colors.$font-color-normal;
+          text-decoration: underline;
+        }
+
+        &:not(:last-child) {
+          &::after {
+            content: "|";
+            margin: 0 4px;
+          }
+        }
+      }
+    }
+    .copyRight {
+      color: colors.$font-color-light;
+    }
+  }
+}
