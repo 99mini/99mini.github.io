@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
         {
           owner: owner,
           repo: repo,
+          state: "closed",
           headers: {
             "X-GitHub-Api-Version": "2022-11-28",
           },
@@ -24,14 +25,13 @@ export async function GET(request: NextRequest) {
 
       const res = { data, status };
 
-      if (res.status === 200 && res.data) {
-        return NextResponse.json(data);
-      } else {
-        return NextResponse.json({
-          status: res.status,
-          data: "",
-        });
-      }
-    } catch (error) {}
+      const releaseData = res.data.filter((itme) =>
+        itme.title.toLowerCase().includes("release")
+      );
+
+      return NextResponse.json({ releaseData, status });
+    } catch (error) {
+      return NextResponse.json(error);
+    }
   }
 }
