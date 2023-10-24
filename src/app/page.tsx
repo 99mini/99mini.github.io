@@ -3,11 +3,9 @@ import "./page.scss";
 
 export default function Home() {
   return (
-    <main className="homeMain">
-      <div className="sectionWrapper">
-        <MainSection />
-      </div>
+    <div className="sectionWrapper">
+      <MainSection>home</MainSection>
       <SideNavbar />
-    </main>
+    </div>
   );
 }
