@@ -5,6 +5,7 @@
   "homepage": "https://https://99mini.github.io/",
   "scripts": {
     "dev": "next dev",
+    "start": "npx serve@latest out",
     "build": "next build && next export",
     "predeploy": "npm run build",
     "deploy": "touch out/.nojekyll && gh-pages -d out --dotfiles"
