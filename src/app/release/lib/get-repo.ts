@@ -10,22 +10,55 @@ const octokit = new Octokit({
   auth: process.env.NEXT_PUBLIC_GITUB_PERSONAL_ACCESS_TOKEN,
 });
 
-export const getRepo = async (state: TPRState, category: TPRCategory) => {
-  const { data: resData, status } = await octokit.request(
-    "GET /repos/{owner}/{repo}/pulls",
-    {
-      owner: owner,
-      repo: repo,
-      state: state,
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
+export type ReleasePRType = {
+  id: number;
+  title: string;
+  url: string;
+  body: string | null;
+  mergedAt: string | null;
+};
+
+export const getRepo = async (
+  state: TPRState = "closed",
+  category: TPRCategory = "release"
+) => {
+  try {
+    const { data: resData, status } = await octokit.request(
+      "GET /repos/{owner}/{repo}/pulls",
+      {
+        owner: owner,
+        repo: repo,
+        state: state,
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      }
+    );
+
+    if (status !== 200) {
+      return null;
     }
-  );
 
-  const data = resData.filter((itme) =>
-    itme.title.toLowerCase().includes(category as string)
-  );
+    const data: ReleasePRType[] = resData
+      .filter((item) => item.title.toLowerCase().includes(category as string))
+      .map((item) => {
+        const releaseVersionMatched = item.title.match(/v\d+\.\d+\.\d/);
+        let releaseVersion = "";
+        if (releaseVersionMatched) {
+          releaseVersion = releaseVersionMatched[0];
+        }
 
-  return { data, status };
+        console.log(item);
+        return {
+          id: item.id,
+          title: releaseVersion,
+          url: item.url,
+          body: item.body,
+          mergedAt: item.merged_at,
+        };
+      });
+    return data;
+  } catch (error) {
+    return null;
+  }
 };

@@ -1,0 +1,33 @@
+@use "/src/sass/base/colors";
+@use "/src/sass/base/typography";
+
+.releaseCardArea {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  .releaseCard {
+    .titleArea {
+      padding-bottom: 8px;
+      border-bottom: 1px solid colors.$border-color-white-light;
+      h1 {
+        font-size: typography.$font-size-2xl;
+      }
+    }
+    h2 {
+      font-size: typography.$font-size-lg;
+    }
+    ul,
+    li {
+      list-style-type: disc;
+    }
+    ul {
+      padding-inline-start: 40px;
+
+      a {
+        &:hover {
+          text-decoration-line: underline;
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,14 @@
-import { MainSection } from "@/src/containers";
+import { MainSection, Release } from "@/src/containers";
 import { getRepo } from "./lib/get-repo";
 
 const ReleasePage = async () => {
-  const { data, status } = await getRepo("open", "release");
-
+  const data = await getRepo();
+  console.log(data);
   return (
     <div>
-      <MainSection>release</MainSection>
+      <MainSection>
+        <Release data={data} />
+      </MainSection>
     </div>
   );
 };
