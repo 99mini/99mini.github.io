@@ -1,11 +1,15 @@
-import { SideNavbar, MainSection } from "../containers";
+import { SideNavbar, MainSection, Home } from "../containers";
 import "./page.scss";
 
-export default function Home() {
+const HomePage = () => {
   return (
     <div className="sectionWrapper">
-      <MainSection>home</MainSection>
+      <MainSection>
+        <Home />
+      </MainSection>
       <SideNavbar />
     </div>
   );
-}
+};
+
+export default HomePage;

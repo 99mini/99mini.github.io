@@ -10,6 +10,7 @@ const formatAncher = (text: string, href: string) =>
 
 const convertPRUrl = (href: string, childrenPR: PRType[]) =>
   childrenPR.find((pr) => pr.url.trim() === href.trim())?.title || href;
+
 const Release = ({ data }: { data: PRType[] | null }) => {
   return (
     <div className="releaseCardArea">
