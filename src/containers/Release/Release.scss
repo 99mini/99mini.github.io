@@ -22,11 +22,10 @@
     }
     ul {
       padding-inline-start: 40px;
-
-      a {
-        &:hover {
-          text-decoration-line: underline;
-        }
+    }
+    a {
+      &:hover {
+        text-decoration-line: underline;
       }
     }
   }
