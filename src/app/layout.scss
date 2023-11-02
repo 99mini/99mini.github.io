@@ -1,0 +1,11 @@
+@use "/src/sass/abstracts/variables";
+@use "/src/sass/layout/breakpoint";
+
+.defaultMain {
+  max-width: variables.$page-max-width-pc;
+  margin: 0 auto;
+
+  @media (max-width: breakpoint.$mobile) {
+    max-width: variables.$page-max-width-mobile;
+  }
+}
