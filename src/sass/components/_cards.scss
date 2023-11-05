@@ -1,8 +1,10 @@
 @use "/src/sass/base/colors";
 
+$card-box-shadow: rgba(0, 0, 0, 0.05) 0 6px 20px;
+
 @mixin card {
   padding: 12px;
   border-radius: 0.75rem;
   background-color: colors.$white-pure;
-  box-shadow: rgba(0, 0, 0, 0.05) 0 6px 20px;
+  box-shadow: $card-box-shadow;
 }

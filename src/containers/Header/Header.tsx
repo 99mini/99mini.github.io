@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./Header.scss";
 
@@ -12,12 +12,30 @@ const pathList = {
 type pathKeyType = keyof typeof pathList;
 
 const Header = () => {
+  const [isScroll, setIsScroll] = useState<boolean>(false);
+
   const handleMenu = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {};
 
+  const handleScroll = () => {
+    if (window.scrollY > 72) {
+      setIsScroll(true);
+    } else {
+      setIsScroll(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="header">
+    <header className={`header${isScroll ? " dropShadow" : ""}`}>
+      <div className="ghostContainer" />
       <nav className="wrapContainer navContainer">
         <a href="/" className="linkItem">
           {"0mini99.dev"}

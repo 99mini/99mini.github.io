@@ -1,4 +1,5 @@
 @use "/src/sass/layout/header";
+@use "/src/sass/layout/breakpoint";
 
 @use "/src/sass/abstracts/variables";
 
@@ -6,7 +7,7 @@
 @use "/src/sass/base/colors";
 @use "/src/sass/base/animations";
 
-@use "/src/sass/layout/breakpoint";
+@use "/src/sass/components/cards";
 
 .header {
   width: 100%;
@@ -32,11 +33,23 @@
 
   color: colors.$font-color-normal;
 
-  border-bottom: 2px solid colors.$border-color-black-light;
-
-  backdrop-filter: blur(8px);
-
   @include animations.hover-transition-color;
+
+  &.dropShadow {
+    backdrop-filter: blur(8px);
+
+    box-shadow: cards.$card-box-shadow;
+  }
+
+  .ghostContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+  }
 
   .navContainer {
     width: 100%;
@@ -45,6 +58,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    position: sticky;
 
     .navItemList {
       width: 100%;
