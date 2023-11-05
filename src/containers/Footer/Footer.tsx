@@ -11,7 +11,7 @@ const linkIconList = {
 const Footer = () => {
   return (
     <footer className="footer">
-      <ul className="footerItemList">
+      <ul className="wrapContainer footerItemList">
         <ul className="iconList">
           <li>
             <a

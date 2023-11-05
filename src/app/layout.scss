@@ -1,7 +1,7 @@
 @use "/src/sass/abstracts/variables";
 @use "/src/sass/layout/breakpoint";
 
-.defaultMain {
+.wrapContainer {
   max-width: variables.$page-max-width-pc;
   margin: 0 auto;
 

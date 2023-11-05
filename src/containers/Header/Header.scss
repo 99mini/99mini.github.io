@@ -65,6 +65,21 @@
 
       .navItem {
         padding: 0 12px;
+
+        &.mobileNavItem {
+          display: none;
+          @media (max-width: breakpoint.$mobile) {
+            display: block;
+          }
+        }
+
+        &.pcNavItem {
+          display: block;
+          @media (max-width: breakpoint.$mobile) {
+            display: none;
+          }
+        }
+
         &:hover {
           color: colors.$font-color-light;
         }

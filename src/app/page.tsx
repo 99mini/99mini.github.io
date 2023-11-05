@@ -1,9 +1,8 @@
 import { SideNavbar, MainSection, Home } from "../containers";
-import "./page.scss";
 
 const HomePage = () => {
   return (
-    <div className="sectionWrapper">
+    <div>
       <MainSection>
         <Home />
       </MainSection>
