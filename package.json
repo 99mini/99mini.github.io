@@ -1,11 +1,12 @@
 {
   "name": "github-blog",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "homepage": "https://https://99mini.github.io/",
   "scripts": {
     "dev": "next dev",
     "start": "npx serve@latest out",
+    "start:product": "next build && next export && npm run start",
     "build": "next build && next export",
     "predeploy": "npm run build",
     "deploy": "touch out/.nojekyll && gh-pages -d out --dotfiles"
@@ -21,9 +22,12 @@
     "@types/react-dom": "18.2.7",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
+    "moment": "^2.29.4",
     "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-markdown": "^9.0.0",
+    "remark-gfm": "^1.0.0",
     "typescript": "5.2.2"
   },
   "devDependencies": {

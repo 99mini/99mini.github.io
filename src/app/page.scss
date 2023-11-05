@@ -1,11 +1,5 @@
-.homeMain {
-  width: 100%;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  .sectionWrapper {
-    width: 100%;
+.homeSection {
+  > div:not(:last-child) {
+    margin-bottom: 24px;
   }
 }

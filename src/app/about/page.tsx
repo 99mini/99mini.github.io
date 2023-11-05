@@ -1,7 +1,12 @@
+import { About, MainSection } from "@/src/containers";
 import React from "react";
 
 const AboutPage = () => {
-  return <div>about</div>;
+  return (
+    <MainSection>
+      <About />
+    </MainSection>
+  );
 };
 
 export default AboutPage;

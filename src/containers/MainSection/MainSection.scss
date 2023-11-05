@@ -1,13 +1,10 @@
 @use "/src/sass/abstracts/variables";
-
 @use "/src/sass/layout/breakpoint";
 
 .mainSection {
-  padding: 0 variables.$page-padding;
   margin: variables.$page-padding 0;
 
   @media (max-width: breakpoint.$mobile) {
-    padding: 0 variables.$page-padding-mobile;
     margin: variables.$page-padding-mobile 0;
   }
 }

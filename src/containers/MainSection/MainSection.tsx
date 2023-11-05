@@ -1,8 +1,14 @@
 import React from "react";
 import "./MainSection.scss";
 
-const MainSection = () => {
-  return <section className="mainSection">main section</section>;
+const MainSection = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return <section className={`mainSection ${className}`}>{children}</section>;
 };
 
 export default MainSection;

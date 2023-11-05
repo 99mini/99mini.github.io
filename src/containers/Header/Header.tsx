@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
-import "./Header.scss";
+import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import "./Header.scss";
 
 const pathList = {
-  // home: "",
   about: "about",
   post: "post",
   pratice: "pratice",
@@ -13,30 +12,45 @@ const pathList = {
 type pathKeyType = keyof typeof pathList;
 
 const Header = () => {
+  const [isScroll, setIsScroll] = useState<boolean>(false);
+
   const handleMenu = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {};
 
+  const handleScroll = () => {
+    if (window.scrollY > 72) {
+      setIsScroll(true);
+    } else {
+      setIsScroll(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="header">
-      <nav className="navContainer">
+    <header className={`header${isScroll ? " dropShadow" : ""}`}>
+      <div className="ghostContainer" />
+      <nav className="wrapContainer navContainer">
+        <a href="/" className="linkItem">
+          {"0mini99.dev"}
+        </a>
+
         <ul className="navItemList">
-          <li className="navItem">
+          <li className="navItem mobileNavItem">
             <button className="linkItem" onClick={handleMenu}>
               <MenuIcon />
             </button>
           </li>
-          <li className="navItem">
-            <a href="/" className="linkItem">
-              {"0mini99.dev"}
-            </a>
-          </li>
-        </ul>
-        <ul className="navItemList">
           {Object.keys(pathList).map((pathKey) => {
             const path = pathKey as pathKeyType;
             return (
-              <li key={path} className="navItem">
+              <li key={path} className="navItem pcNavItem">
                 <a className={"linkItem"} href={"/" + pathList[path]}>
                   {pathKey}
                 </a>
