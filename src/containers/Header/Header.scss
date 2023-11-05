@@ -12,6 +12,8 @@
   width: 100%;
   height: header.$header-height;
 
+  display: flex;
+
   box-sizing: border-box;
   padding: 8px variables.$page-padding;
 
@@ -27,9 +29,10 @@
   line-height: typography.$line-height-default;
 
   color: colors.$font-color-normal;
-  background-color: colors.$white-pure;
 
   border-bottom: 2px solid colors.$border-color-black-light;
+
+  backdrop-filter: blur(8px);
 
   @include animations.hover-transition-color;
 

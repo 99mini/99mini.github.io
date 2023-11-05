@@ -19,21 +19,21 @@ const Release = ({ data }: { data: PRType[] | null }) => {
           "# ",
           formatAncher(releaseItem.title, releaseItem.url),
         ].join("");
+
         const formatingBody = releaseItem.body
           ?.split("\n")
-          .map((row) => {
-            return releaseItem.childrenPR &&
-              /https:\/\/github\.com\/99mini\/99mini\.github\.io\/pull/.test(
-                row
-              )
+          .map((row) =>
+            releaseItem.childrenPR &&
+            /https:\/\/github\.com\/99mini\/99mini\.github\.io\/pull/.test(row)
               ? "- " +
-                  formatAncher(
-                    convertPRUrl(row.replace("- ", ""), releaseItem.childrenPR),
-                    row.replace("- ", "").replace("\r\n ", "")
-                  )
-              : row;
-          })
+                formatAncher(
+                  convertPRUrl(row.replace("- ", ""), releaseItem.childrenPR),
+                  row.replace("- ", "").replace("\r\n ", "")
+                )
+              : row
+          )
           .join("");
+
         return (
           <div key={releaseItem.id} className="releaseCard">
             <Markdown remarkPlugins={[remarkGfm]} className={"titleArea"}>

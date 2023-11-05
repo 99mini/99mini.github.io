@@ -1,11 +1,15 @@
 @use "/src/sass/base/colors";
 @use "/src/sass/base/typography";
+@use "/src/sass/components/cards";
 
 .releaseCardArea {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 16px;
+
   .releaseCard {
+    @include cards.card;
+
     .titleArea {
       padding-bottom: 8px;
       border-bottom: 1px solid colors.$border-color-white-light;
