@@ -8,12 +8,12 @@
 
 .footer {
   padding: variables.$page-padding;
+  margin-top: variables.$page-padding;
 
   @media (max-width: breakpoint.$mobile) {
     padding: variables.$page-padding-mobile;
+    margin-top: variables.$page-padding-mobile;
   }
-
-  border-top: 2px solid colors.$border-color-black-light;
 
   font-weight: typography.$font-weight-light;
   font-size: typography.$font-size-md;

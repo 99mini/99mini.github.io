@@ -1,0 +1,40 @@
+@use "src/sass/components/_cards.scss";
+
+@use "src/sass/base/_typography.scss";
+@use "src/sass/base/_colors.scss";
+
+.aboutLayout {
+  @include cards.cardColumnLayout;
+
+  .aboutCard {
+    @include cards.card;
+
+    .cardTitle {
+      font-size: typography.$font-size-2xl;
+      font-weight: typography.$font-weight-bold;
+      line-height: typography.$line-height-default;
+
+      color: colors.$primary-color;
+
+      margin-bottom: 12px;
+    }
+
+    .markDownContainer {
+      ul,
+      li {
+        list-style-type: disc;
+      }
+      ul {
+        padding-inline-start: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      li a {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

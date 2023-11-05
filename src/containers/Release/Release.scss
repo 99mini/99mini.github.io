@@ -3,9 +3,7 @@
 @use "/src/sass/components/cards";
 
 .releaseCardArea {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  @include cards.cardColumnLayout;
 
   .releaseCard {
     @include cards.card;

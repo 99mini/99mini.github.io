@@ -1,8 +1,9 @@
-import { SideNavbar, MainSection, Home } from "../containers";
+import { About, Home, MainSection } from "../containers";
 
 const HomePage = () => {
   return (
     <MainSection>
+      <About />
       <Home />
     </MainSection>
   );
