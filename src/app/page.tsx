@@ -2,12 +2,9 @@ import { SideNavbar, MainSection, Home } from "../containers";
 
 const HomePage = () => {
   return (
-    <>
-      <MainSection>
-        <Home />
-      </MainSection>
-      <SideNavbar />
-    </>
+    <MainSection>
+      <Home />
+    </MainSection>
   );
 };
 
