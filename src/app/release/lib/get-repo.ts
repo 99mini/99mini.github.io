@@ -10,13 +10,14 @@ const octokit = new Octokit({
   auth: process.env.NEXT_PUBLIC_GITUB_PERSONAL_ACCESS_TOKEN,
 });
 
+export const revalidate = 360;
+
 export type PRType = {
   id: number;
   title: string;
   url: string;
   body: string | null;
   mergedAt?: string | null;
-  childrenPR?: PRType[];
 };
 
 export const getPR = async (prNumber: number) => {
@@ -74,33 +75,13 @@ export const getRepo = async (
         if (releaseVersionMatched) {
           releaseVersion = "릴리즈 " + releaseVersionMatched[0];
         }
-        const mergedPRList = item.body
-          ?.split("\n")
-          .filter((row) => row.startsWith("-"))
-          .map(
-            (url) =>
-              (url
-                .replace(
-                  /- https:\/\/github\.com\/99mini\/99mini\.github\.io\/pull/,
-                  ""
-                )
-                .match(/\d+/) || [])[0]
-          );
-        const childrenPR: PRType[] = [];
-        mergedPRList?.forEach(async (prNumber) => {
-          const data = await getPR(Number(prNumber));
-          if (data) {
-            childrenPR.push(data);
-          }
-        });
 
         return {
           id: item.id,
           title: releaseVersion,
           url: item.html_url,
-          body: item.body,
+          body: item.body?.replace("\r", "") || null,
           mergedAt: item.merged_at,
-          childrenPR,
         };
       });
     return data;
