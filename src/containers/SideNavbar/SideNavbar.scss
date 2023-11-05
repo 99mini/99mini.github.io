@@ -5,6 +5,8 @@
 @use "/src/sass/layout/header";
 @use "/src/sass/layout/breakpoint";
 
+@use "/src/sass/components/cards";
+
 .asideNavbar {
   position: fixed;
   bottom: header.$header-height;
@@ -13,17 +15,26 @@
   background-color: colors.$white-pure;
 
   @media (max-width: breakpoint.$mobile) {
-    padding: variables.$page-padding-mobile;
     right: variables.$page-padding-mobile;
+    bottom: 20px;
   }
+
+  @include cards.card;
+  padding: 8px;
+
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+
   .contentWrapper {
     .buttonList {
       .buttonItem {
-        width: 38px;
-        height: 38px;
+        width: 32px;
+        height: 32px;
 
         box-sizing: border-box;
-        border: 1px solid colors.$border-color-white-light;
 
         &:last-child {
           border-top: none;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Header, Footer } from "../containers";
+import { Header, Footer, SideNavbar } from "../containers";
 import "./globals.css";
 import "./layout.scss";
 
@@ -20,8 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        <main className="defaultMain">{children}</main>
+        <main className="wrapContainer">{children}</main>
         <Footer />
+        <SideNavbar />
       </body>
     </html>
   );

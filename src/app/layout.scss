@@ -1,11 +1,14 @@
 @use "/src/sass/abstracts/variables";
 @use "/src/sass/layout/breakpoint";
+@use "/src/sass/base/colors";
 
-.defaultMain {
+.wrapContainer {
   max-width: variables.$page-max-width-pc;
   margin: 0 auto;
+  padding: 0 variables.$page-padding;
 
   @media (max-width: breakpoint.$mobile) {
     max-width: variables.$page-max-width-mobile;
+    padding: 0 variables.$page-padding-mobile;
   }
 }

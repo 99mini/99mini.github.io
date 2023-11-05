@@ -6,7 +6,8 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const SideNavbar = () => {
-  const [isTopDisable, setIsTopDisable] = useState(false);
+  const [isTopDisable, setIsTopDisable] = useState(true);
+  const [isScroll, setIsScroll] = useState(false);
 
   const handleScrollPostion = (destination: number) => {
     window.scrollTo({ top: destination });
@@ -15,10 +16,12 @@ const SideNavbar = () => {
   const handleScroll = () => {
     const { scrollY } = window;
     setIsTopDisable(scrollY < 200);
+    setIsScroll(scrollY > 72);
   };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    console.log(window.scrollY);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -26,7 +29,7 @@ const SideNavbar = () => {
   }, []);
 
   return (
-    <aside className="asideNavbar">
+    <aside className={`asideNavbar${isScroll ? " visible" : ""}`}>
       <div className="contentWrapper">
         <ul className="buttonList">
           <li className="buttonItem">
