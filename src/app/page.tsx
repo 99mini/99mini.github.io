@@ -1,10 +1,14 @@
-import { About, Home, MainSection } from "../containers";
+import { About, Home, MainSection, Release } from "../containers";
+import { getRepo } from "./release/lib/get-repo";
+import "./page.scss";
 
-const HomePage = () => {
+const HomePage = async () => {
+  const releaseData = await getRepo();
   return (
-    <MainSection>
+    <MainSection className="homeSection">
       <About />
-      <Home />
+      {/* <Home />/ */}
+      <Release data={releaseData} />
     </MainSection>
   );
 };
