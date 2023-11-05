@@ -24,6 +24,8 @@
   position: sticky;
   top: 0;
 
+  z-index: 1;
+
   font-weight: typography.$font-weight-bold;
   font-size: typography.$font-size-lg;
   line-height: typography.$line-height-default;
