@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "./Release.scss";
+import PageTitle from "@/src/components/PageTitle/PageTitle";
 
 const formatAncher = (text: string, href: string) =>
   ["[", text, "]", "(", href, ")\n"].join("");
@@ -72,11 +73,14 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
 
 const Release = ({ data }: { data: PRType[] | null }) => {
   return (
-    <div className="releaseCardArea">
-      {data?.map((releaseItem) => (
-        <ReleaseCard key={releaseItem.id} releaseItem={releaseItem} />
-      ))}
-    </div>
+    <>
+      <PageTitle>릴리즈 노트</PageTitle>
+      <div className="releaseCardArea">
+        {data?.map((releaseItem) => (
+          <ReleaseCard key={releaseItem.id} releaseItem={releaseItem} />
+        ))}
+      </div>
+    </>
   );
 };
 
