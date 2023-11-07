@@ -38,9 +38,8 @@ const Header = () => {
       <div className="ghostContainer" />
       <nav className="wrapContainer navContainer">
         <a href="/" className="linkItem">
-          {"0mini99.dev"}
+          {"99mini.dev"}
         </a>
-
         <ul className="navItemList">
           <li className="navItem mobileNavItem">
             <button className="linkItem" onClick={handleMenu}>
