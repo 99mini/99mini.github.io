@@ -81,10 +81,10 @@ export const getRepo = async (
           title: releaseVersion,
           url: item.html_url,
           body: item.body?.replace("\r", "") || null,
-          mergedAt: item.merged_at,
+          mergedAt: item.merged_at || new Date().toISOString(),
         };
       });
-    return data;
+    return data.sort((a, b) => (b.mergedAt > a.mergedAt ? 1 : -1));
   } catch (error) {
     return null;
   }
