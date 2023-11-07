@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { DirectionKey, DirectionValue, ReturnType, direction } from "./types";
 
-const useScrollFadeIn = (
+const useScrollAnimation = (
   _duration: number = 1,
   _delay: number = 0,
   _threshold: number = 0.3,
@@ -57,4 +57,4 @@ const useScrollFadeIn = (
   };
 };
 
-export default useScrollFadeIn;
+export default useScrollAnimation;

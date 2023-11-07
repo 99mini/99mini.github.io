@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "./Release.scss";
+import PageTitle from "@/src/components/PageTitle/PageTitle";
 
 const formatAncher = (text: string, href: string) =>
   ["[", text, "]", "(", href, ")\n"].join("");
@@ -26,9 +27,9 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
 
     const prReg = /https:\/\/github\.com\/99mini\/99mini\.github\.io\/pull/;
 
-    const tmpFormatingBody: string[] = [];
+    const tmpFormatingBody: string[] = releaseItem.body.split("\n");
 
-    const promises = releaseItem.body.split("\n").map(async (row) => {
+    const promises = releaseItem.body.split("\n").map(async (row, index) => {
       if (prReg.test(row)) {
         const prNumber = (row.replace(prReg, "").match(/\d+/) || [])[0];
         if (Number(prNumber)) {
@@ -39,19 +40,20 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
                 res?.title || row,
                 row.replace("- ", "").replace("\r", "")
               ) || row;
-          tmpFormatingBody.push(tmpRow + "\n");
+          tmpFormatingBody[index] = tmpRow + "\n";
           return;
         }
-        tmpFormatingBody.push(row + "\n");
+        tmpFormatingBody[index] = row + "\n";
         return;
       }
-      tmpFormatingBody.push(row + "\n");
+      tmpFormatingBody[index] = row + "\n";
       return;
     });
     (async () => {
       await Promise.all(promises);
       setFormatingBody(tmpFormatingBody.join(""));
     })();
+    console.log(tmpFormatingBody);
   }, [releaseItem]);
 
   return (
@@ -71,11 +73,14 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
 
 const Release = ({ data }: { data: PRType[] | null }) => {
   return (
-    <div className="releaseCardArea">
-      {data?.map((releaseItem) => (
-        <ReleaseCard key={releaseItem.id} releaseItem={releaseItem} />
-      ))}
-    </div>
+    <>
+      <PageTitle>릴리즈 노트</PageTitle>
+      <div className="releaseCardArea">
+        {data?.map((releaseItem) => (
+          <ReleaseCard key={releaseItem.id} releaseItem={releaseItem} />
+        ))}
+      </div>
+    </>
   );
 };
 
