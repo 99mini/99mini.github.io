@@ -21,7 +21,7 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
   ].join("");
 
   useEffect(() => {
-    if (!releaseItem.body) {
+    if (!releaseItem || !releaseItem.body) {
       return;
     }
 
@@ -40,7 +40,7 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
                 res?.title || row,
                 row.replace("- ", "").replace("\r", "")
               ) || row;
-          tmpFormatingBody[index] = tmpRow + "\n";
+          tmpFormatingBody[index] = tmpRow;
           return;
         }
         tmpFormatingBody[index] = row + "\n";
@@ -53,7 +53,6 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
       await Promise.all(promises);
       setFormatingBody(tmpFormatingBody.join(""));
     })();
-    console.log(tmpFormatingBody);
   }, [releaseItem]);
 
   return (
