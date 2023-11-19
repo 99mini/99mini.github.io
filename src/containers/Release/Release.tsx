@@ -53,7 +53,6 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
       await Promise.all(promises);
       setFormatingBody(tmpFormatingBody.join(""));
     })();
-    console.log(tmpFormatingBody);
   }, [releaseItem]);
 
   return (
