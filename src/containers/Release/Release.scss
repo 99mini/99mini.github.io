@@ -29,13 +29,15 @@
     a {
       text-decoration-line: underline;
       color: colors.$primary-color;
+      &:hover {
+        em {
+          color: colors.$primary-color;
+        }
+      }
 
       em {
         font-style: normal;
         color: colors.$font-color-light;
-        &:hover {
-          color: colors.$primary-color;
-        }
       }
     }
   }
