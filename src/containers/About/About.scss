@@ -32,6 +32,7 @@
       }
       li a {
         text-decoration: underline;
+        text-underline-offset: 0.2rem;
         &:hover {
           color: colors.$primary-color;
         }

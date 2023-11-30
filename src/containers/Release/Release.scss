@@ -13,6 +13,7 @@
       border-bottom: 1px solid colors.$border-color-white-light;
       h1 {
         font-size: typography.$font-size-2xl;
+        margin-bottom: 4px;
       }
     }
     h2 {
@@ -28,6 +29,8 @@
     }
     a {
       text-decoration-line: underline;
+      text-underline-offset: 0.2rem;
+
       color: colors.$primary-color;
       &:hover {
         em {
