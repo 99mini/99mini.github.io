@@ -80,7 +80,7 @@ export const getRepo = async (
           id: item.id,
           title: releaseVersion,
           url: item.html_url,
-          body: item.body?.replace("\r", "") || null,
+          body: item.body?.replace(/\r+/g, "").replace(/\n+/g, "\n") || null,
           mergedAt: item.merged_at || new Date().toISOString(),
         };
       });
