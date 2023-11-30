@@ -1,24 +1,20 @@
 "use client";
 import { PRType, getPR } from "@/src/app/release/lib/get-repo";
+import PageTitle from "@/src/components/PageTitle/PageTitle";
 import { useScrollAnimation } from "@/src/hook";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "./Release.scss";
-import PageTitle from "@/src/components/PageTitle/PageTitle";
 
-const formatAncher = (text: string, href: string) =>
-  ["[", text, "]", "(", href, ")\n"].join("");
+const formatAncher = (text: string, href: string) => ["🔗 [", text.trim(), "]", "(", href, ")\n"].join("");
 
 const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
   const { ref, style } = useScrollAnimation();
   const [formatingBody, setFormatingBody] = useState<string>("");
 
-  const releaseVersion = [
-    "# ",
-    formatAncher(releaseItem.title, releaseItem.url),
-  ].join("");
+  const releaseVersion = ["# ", formatAncher(releaseItem.title, releaseItem.url)].join("");
 
   useEffect(() => {
     if (!releaseItem || !releaseItem.body) {
@@ -32,14 +28,9 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
     const promises = releaseItem.body.split("\n").map(async (row, index) => {
       if (prReg.test(row)) {
         const prNumber = (row.replace(prReg, "").match(/\d+/) || [])[0];
-        if (Number(prNumber)) {
+        if (prNumber && Number(prNumber)) {
           const res = await getPR(Number(prNumber));
-          const tmpRow =
-            "- " +
-              formatAncher(
-                res?.title || row,
-                row.replace("- ", "").replace("\r", "")
-              ) || row;
+          const tmpRow = "- " + formatAncher(res?.title.concat("&nbsp;_#" + prNumber + "_") || row, row.replace("- ", "").replace("\r", "")) || row;
           tmpFormatingBody[index] = tmpRow;
           return;
         }
@@ -58,12 +49,7 @@ const ReleaseCard = ({ releaseItem }: { releaseItem: PRType }) => {
   return (
     <div className="releaseCard" ref={ref} style={style}>
       <Markdown remarkPlugins={[remarkGfm]} className={"titleArea"}>
-        {[
-          releaseVersion,
-          moment(
-            releaseItem.mergedAt?.replaceAll("-", "").substring(0, 8) || ""
-          ).format("YY년 MM월 DD일"),
-        ].join("\n")}
+        {[releaseVersion, moment(releaseItem.mergedAt?.replaceAll("-", "").substring(0, 8) || "").format("YY년 MM월 DD일")].join("\n")}
       </Markdown>
       <Markdown remarkPlugins={[remarkGfm]}>{formatingBody}</Markdown>
     </div>

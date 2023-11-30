@@ -31,8 +31,9 @@
         gap: 4px;
       }
       li a {
+        text-decoration: underline;
         &:hover {
-          text-decoration: underline;
+          color: colors.$primary-color;
         }
       }
     }
