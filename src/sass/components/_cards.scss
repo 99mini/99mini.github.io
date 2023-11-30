@@ -13,4 +13,7 @@ $card-box-shadow: rgba(0, 0, 0, 0.05) 0 6px 20px;
   border-radius: 0.75rem;
   background-color: colors.$white-pure;
   box-shadow: $card-box-shadow;
+
+  word-wrap: break-word;
+  word-break: keep-all;
 }
