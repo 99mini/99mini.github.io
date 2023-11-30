@@ -1,5 +1,7 @@
+import GomokuContainer from "@/src/containers/Practice/Gomoku";
+
 const GomokuPage = () => {
-  return <div></div>;
+  return <GomokuContainer />;
 };
 
 export default GomokuPage;
