@@ -6,9 +6,7 @@ const HomePage = async () => {
   const releaseData = await getRepo();
   return (
     <MainSection className="homeSection">
-      <About />
-      {/* <Home />/ */}
-      <Release data={releaseData} />
+      <Home releaseData={releaseData} />
     </MainSection>
   );
 };

@@ -12,29 +12,10 @@ const pathList = {
 type pathKeyType = keyof typeof pathList;
 
 const Header = () => {
-  const [isScroll, setIsScroll] = useState<boolean>(false);
-
-  const handleMenu = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {};
-
-  const handleScroll = () => {
-    if (window.scrollY > 72) {
-      setIsScroll(true);
-    } else {
-      setIsScroll(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const handleMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {};
 
   return (
-    <header className={`header${isScroll ? " dropShadow" : ""}`}>
+    <header className={`header dropShadow`}>
       <div className="ghostContainer" />
       <nav className="wrapContainer navContainer">
         <a href="/" className="linkItem">

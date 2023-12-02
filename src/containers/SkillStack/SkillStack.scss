@@ -1,0 +1,114 @@
+@use "src/sass/base/_typography.scss";
+@use "src/sass/base/_colors.scss";
+
+$ANIMATION_DURATION: 1s;
+
+$ANINATION_INIT_OPACITY: 1;
+$ANINATION_SIDE_OPACITY: 0.7;
+
+$ANINATION_INIT_SCALE: 1;
+$ANINATION_SIDE_SCALE: 0.7;
+$ANINATION_TINY_SCALE: 0.3;
+
+$ANINATION_PLUS_TRANSLATE: 150%;
+$ANINATION_MINUS_TRANSLATE: -150%;
+
+$ANINATION_FAID_ID_TRANSLATE: 250%;
+$ANINATION_FAID_OUT_TRANSLATE: -250%;
+
+@keyframes slideFadeOut {
+  0% {
+    transform: translate3d(0, $ANINATION_MINUS_TRANSLATE, 0);
+    scale: $ANINATION_SIDE_SCALE;
+    opacity: $ANINATION_SIDE_OPACITY;
+  }
+
+  100% {
+    transform: translate3d(0, $ANINATION_FAID_OUT_TRANSLATE, 0);
+    scale: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes slidePrev {
+  0% {
+    transform: translate3d(0, 0, 0);
+    scale: $ANINATION_INIT_SCALE;
+    opacity: $ANINATION_INIT_OPACITY;
+  }
+
+  100% {
+    transform: translate3d(0, $ANINATION_MINUS_TRANSLATE, 0);
+    scale: $ANINATION_SIDE_SCALE;
+    opacity: $ANINATION_SIDE_OPACITY;
+  }
+}
+
+@keyframes slideActive {
+  0% {
+    transform: translate3d(0, $ANINATION_PLUS_TRANSLATE, 0);
+    scale: $ANINATION_SIDE_SCALE;
+    opacity: $ANINATION_SIDE_OPACITY;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+    scale: $ANINATION_INIT_SCALE;
+    opacity: $ANINATION_INIT_OPACITY;
+  }
+}
+
+@keyframes slideNext {
+  0% {
+    transform: translate3d(0, $ANINATION_FAID_ID_TRANSLATE, 0);
+    scale: $ANINATION_TINY_SCALE;
+    opacity: $ANINATION_INIT_OPACITY;
+  }
+
+  100% {
+    transform: translate3d(0, $ANINATION_PLUS_TRANSLATE, 0);
+    scale: $ANINATION_SIDE_SCALE;
+    opacity: $ANINATION_SIDE_OPACITY;
+  }
+}
+
+.carouselContainer {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .carouselList {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .carouselItem {
+      position: absolute;
+
+      &.fadeOut {
+        animation: slideFadeOut $ANIMATION_DURATION forwards;
+      }
+      &.prev {
+        animation: slidePrev $ANIMATION_DURATION forwards;
+      }
+      &.active {
+        animation: slideActive $ANIMATION_DURATION forwards;
+      }
+      &.next {
+        animation: slideNext $ANIMATION_DURATION forwards;
+      }
+      &.none {
+        display: none;
+      }
+      .stackText {
+        font-size: typography.$font-size-2xl;
+        background: -webkit-linear-gradient(colors.$primary-color, colors.$primary-color-80);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+}
