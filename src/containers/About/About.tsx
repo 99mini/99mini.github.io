@@ -5,13 +5,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PageTitle from "@/src/components/PageTitle/PageTitle";
 
-const AboutCard = ({
-  title,
-  markdownContent,
-}: {
-  title: string;
-  markdownContent: string;
-}) => {
+const AboutCard = ({ title, markdownContent }: { title: string; markdownContent: string }) => {
   const { ref, style } = useScrollAnimation();
   return (
     <div ref={ref} style={style} className="aboutCard">
@@ -28,16 +22,10 @@ const About = () => {
     <>
       <PageTitle>About</PageTitle>
       <div className="aboutLayout">
-        <AboutCard
-          title={"About Me"}
-          markdownContent={"- 신입 프론트 엔드 개발자 김영민입니다.|".replaceAll(
-            "|",
-            "\n"
-          )}
-        />
+        <AboutCard title={"About Me"} markdownContent={"- 신입 프론트 엔드 개발자 김영민입니다.|".replaceAll("|", "\n")} />
         <AboutCard
           title={"Projects"}
-          markdownContent={`- 🔗 [교대 동아리 유도부 홈페이지 제작 (2022.12 ~ 2023.02)](https://uosjudo.com "서울시립대 유도부 바로가기")|`.replaceAll(
+          markdownContent={`- 🔗 [교내 동아리 유도부 홈페이지 제작 (2022.12 ~ 2023.02)](https://uosjudo.com "서울시립대 유도부 바로가기")|`.replaceAll(
             "|",
             "\n"
           )}
