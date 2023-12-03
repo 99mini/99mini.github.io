@@ -22,17 +22,14 @@ export type PRType = {
 
 export const getPR = async (prNumber: number) => {
   try {
-    const { data: resData, status } = await octokit.request(
-      "GET /repos/{owner}/{repo}/pulls/{pull_number}",
-      {
-        owner: owner,
-        repo: repo,
-        pull_number: prNumber,
-        headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
-        },
-      }
-    );
+    const { data: resData, status } = await octokit.request("GET /repos/{owner}/{repo}/pulls/{pull_number}", {
+      owner: owner,
+      repo: repo,
+      pull_number: prNumber,
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    });
 
     if (status !== 200) {
       return null;
@@ -46,33 +43,29 @@ export const getPR = async (prNumber: number) => {
   }
 };
 
-export const getRepo = async (
-  state: TPRState = "closed",
-  category: TPRCategory = "release"
-) => {
+export const getRepo = async (state: TPRState = "closed", category: TPRCategory = "release") => {
   try {
-    const { data: resData, status } = await octokit.request(
-      "GET /repos/{owner}/{repo}/pulls",
-      {
-        owner: owner,
-        repo: repo,
-        state: state,
-        headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
-        },
-      }
-    );
+    const { data: resData, status } = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
+      owner: owner,
+      repo: repo,
+      state: state,
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    });
 
     if (status !== 200) {
       return null;
     }
 
+    const releaseReg = /\[(release)\]/gim;
+
     const data = resData
-      .filter((item) => item.title.toLowerCase().includes(category as string))
+      .filter((item) => releaseReg.test(item.title))
       .map((item) => {
         const releaseVersionMatched = item.title.match(/v\d+\.\d+\.\d/);
         let releaseVersion = "";
-        if (releaseVersionMatched) {
+        if (releaseVersionMatched && releaseVersionMatched[0]) {
           releaseVersion = "릴리즈 " + releaseVersionMatched[0];
         }
 
@@ -83,8 +76,10 @@ export const getRepo = async (
           body: item.body?.replace(/\r+/g, "").replace(/\n+/g, "\n") || null,
           mergedAt: item.merged_at || new Date().toISOString(),
         };
-      });
-    return data.sort((a, b) => (b.mergedAt > a.mergedAt ? 1 : -1));
+      })
+      .sort((a, b) => (b.mergedAt > a.mergedAt ? 1 : -1));
+
+    return data;
   } catch (error) {
     return null;
   }
