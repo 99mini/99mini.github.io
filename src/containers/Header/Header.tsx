@@ -1,8 +1,7 @@
 "use client";
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Header.scss";
-import { createPortal } from "react-dom";
 
 const pathList = {
   about: "about",
@@ -13,11 +12,7 @@ const pathList = {
 type pathKeyType = keyof typeof pathList;
 
 const MobileNavBar = ({ isOpen }: { isOpen: boolean }) => {
-  if (typeof document === undefined) {
-    return;
-  }
-
-  return createPortal(
+  return (
     <div className={`navbarBackground ${isOpen ? "open" : "close"}`}>
       <div className="mobileNavbarContainerWrapper">
         <div className={`mobileNavbarContainer`}>
@@ -37,8 +32,7 @@ const MobileNavBar = ({ isOpen }: { isOpen: boolean }) => {
           </div>
         </div>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 };
 
