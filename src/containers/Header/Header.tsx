@@ -13,7 +13,7 @@ const pathList = {
 type pathKeyType = keyof typeof pathList;
 
 const MobileNavBar = ({ isOpen }: { isOpen: boolean }) => {
-  if (!document) {
+  if (typeof document === undefined) {
     return;
   }
 
