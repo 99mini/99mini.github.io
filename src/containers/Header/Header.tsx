@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import React, { useState } from "react";
 import "./Header.scss";
+import { createPortal } from "react-dom";
 
 const pathList = {
   about: "about",
@@ -11,8 +12,35 @@ const pathList = {
 
 type pathKeyType = keyof typeof pathList;
 
+const MobileNavBar = ({ isOpen }: { isOpen: boolean }) => {
+  return createPortal(
+    <div className={`navbarBackground ${isOpen ? "open" : "close"}`}>
+      <div className="mobileNavbarContainerWrapper">
+        <div className={`mobileNavbarContainer`}>
+          <div className="mobileNavbarCard">
+            <ul className="navItemList">
+              {Object.keys(pathList).map((pathKey) => {
+                const path = pathKey as pathKeyType;
+                return (
+                  <li key={path} className="navItem">
+                    <a className={"linkItem"} href={"/" + pathList[path]}>
+                      {pathKey}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
 const Header = () => {
-  const handleMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {};
+  const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
+  const handleMenu = () => setIsOpenDrawer((prev) => !prev);
 
   return (
     <header className={`header dropShadow`}>
@@ -39,6 +67,7 @@ const Header = () => {
           })}
         </ul>
       </nav>
+      {<MobileNavBar isOpen={isOpenDrawer} />}
     </header>
   );
 };
