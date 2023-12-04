@@ -13,6 +13,10 @@ const pathList = {
 type pathKeyType = keyof typeof pathList;
 
 const MobileNavBar = ({ isOpen }: { isOpen: boolean }) => {
+  if (!document) {
+    return;
+  }
+
   return createPortal(
     <div className={`navbarBackground ${isOpen ? "open" : "close"}`}>
       <div className="mobileNavbarContainerWrapper">
