@@ -2,6 +2,23 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./index.scss";
 
+type GamePlayType = {
+  sequence: number;
+  player: "black" | "white";
+  position: {
+    row: number;
+    col: number;
+  };
+};
+
+const PlayerInfo = ({ player }: { player: string }) => {
+  return (
+    <div>
+      <div>{player}</div>
+    </div>
+  );
+};
+
 const GomokuContainer = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [board, setBoard] = useState<string[][]>([]);
@@ -13,6 +30,8 @@ const GomokuContainer = () => {
   const [winner, setWinner] = useState<string | null>(null);
 
   const [canvasStyleCSS, setCanvasStyleCSS] = useState<React.CSSProperties>({});
+
+  const [gameInfo, setGameInfo] = useState<GamePlayType[]>([]);
 
   const boardSize = 15;
 
@@ -157,6 +176,15 @@ const GomokuContainer = () => {
       newBoard[row][col] = currentPlayer;
       setBoard(newBoard);
 
+      // save game info
+      const newGameInfo = [...gameInfo, { sequence: gameInfo.length + 1, player: currentPlayer, position: { row, col } }];
+      const stringifyGameInfo = btoa(JSON.stringify({ game: newGameInfo }));
+      console.log(JSON.parse(atob(stringifyGameInfo)));
+      const url = new URL(window.location.href);
+      url.searchParams.set("game", stringifyGameInfo);
+
+      window.history.pushState({}, "", url);
+      setGameInfo(newGameInfo);
       // Check for a winner
       const isWinner = checkForWinner(row, col);
       if (isWinner) {
@@ -265,15 +293,17 @@ const GomokuContainer = () => {
 
   return (
     <div className="gomokuGameBoardContainer">
+      <PlayerInfo player={"black"} />
       <canvas
         ref={canvasRef}
         className="gomokuGameBoard"
-        width={window.innerWidth * 0.7} // Set your desired width
-        height={window.innerWidth * 0.7} // Set your desired height
+        width={window.innerWidth * 0.6} // Set your desired width
+        height={window.innerWidth * 0.6} // Set your desired height
         style={{ ...canvasStyleCSS }}
         onClick={handleCanvasClick}
         onMouseMove={handleCanvasMouseMove}
       />
+      <PlayerInfo player={"white"} />
     </div>
   );
 };
