@@ -1,6 +1,14 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { randomString16 } from "@/src/Utils";
 import "./index.scss";
+
+type GameInfoType = {
+  id: string;
+  game: GamePlayType[];
+  status: GameStatusType;
+};
 
 type GamePlayType = {
   sequence: number;
@@ -10,6 +18,8 @@ type GamePlayType = {
     col: number;
   };
 };
+
+type GameStatusType = "continue" | "black" | "white";
 
 const PlayerInfo = ({ player }: { player: string }) => {
   return (
@@ -31,15 +41,35 @@ const GomokuContainer = () => {
 
   const [canvasStyleCSS, setCanvasStyleCSS] = useState<React.CSSProperties>({});
 
-  const [gameInfo, setGameInfo] = useState<GamePlayType[]>([]);
+  const [gameInfo, setGameInfo] = useState<GameInfoType>();
+
+  const gameIdRef = useRef<string>("");
+
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const boardSize = 15;
 
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   const drawPreviewBoard = (ctx: CanvasRenderingContext2D) => {
-    const cellSize = canvasRef.current?.width! / boardSize;
+    if (!canvasRef.current || !canvasRef.current.width || !canvasRef.current.height) {
+      return;
+    }
+
+    const cellSize = canvasRef.current.width / boardSize;
 
     // Draw the board lines
-    ctx.clearRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
+    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
     ctx.strokeStyle = "rgb(0, 0, 0)";
     ctx.lineWidth = 2;
@@ -50,13 +80,13 @@ const GomokuContainer = () => {
       // Draw horizontal lines
       ctx.beginPath();
       ctx.moveTo(cellSize, position);
-      ctx.lineTo(canvasRef.current!.width - cellSize, position);
+      ctx.lineTo(canvasRef.current.width - cellSize, position);
       ctx.stroke();
 
       // Draw vertical lines
       ctx.beginPath();
       ctx.moveTo(position, cellSize);
-      ctx.lineTo(position, canvasRef.current!.height - cellSize);
+      ctx.lineTo(position, canvasRef.current.height - cellSize);
       ctx.stroke();
     }
 
@@ -85,13 +115,13 @@ const GomokuContainer = () => {
 
   const drawBoard = useCallback(
     (ctx: CanvasRenderingContext2D) => {
-      if (board.length === 0) {
+      if (board.length === 0 || !canvasRef.current || !canvasRef.current.width || !canvasRef.current.height) {
         return;
       }
-      const cellSize = canvasRef.current?.width! / boardSize;
+      const cellSize = canvasRef.current.width / boardSize;
 
       // Draw the board lines
-      ctx.clearRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
+      ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
       ctx.strokeStyle = "rgb(0, 0, 0)";
       ctx.lineWidth = 2;
@@ -102,13 +132,13 @@ const GomokuContainer = () => {
         // Draw horizontal lines
         ctx.beginPath();
         ctx.moveTo(cellSize, position);
-        ctx.lineTo(canvasRef.current!.width - cellSize, position);
+        ctx.lineTo(canvasRef.current.width - cellSize, position);
         ctx.stroke();
 
         // Draw vertical lines
         ctx.beginPath();
         ctx.moveTo(position, cellSize);
-        ctx.lineTo(position, canvasRef.current!.height - cellSize);
+        ctx.lineTo(position, canvasRef.current.height - cellSize);
         ctx.stroke();
       }
 
@@ -143,11 +173,13 @@ const GomokuContainer = () => {
   };
 
   const drawWinnerLine = (ctx: CanvasRenderingContext2D) => {
-    // Draw the winning line based on your game logic
-    // This is just a placeholder, you should implement the actual winning line drawing
+    if (!canvasRef.current || !canvasRef.current.width || !canvasRef.current.height) {
+      return;
+    }
+
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(canvasRef.current!.width, canvasRef.current!.height);
+    ctx.lineTo(canvasRef.current.width, canvasRef.current.height);
     ctx.strokeStyle = "rgb(255, 0, 0)";
     ctx.lineWidth = 5;
     ctx.stroke();
@@ -176,15 +208,6 @@ const GomokuContainer = () => {
       newBoard[row][col] = currentPlayer;
       setBoard(newBoard);
 
-      // save game info
-      const newGameInfo = [...gameInfo, { sequence: gameInfo.length + 1, player: currentPlayer, position: { row, col } }];
-      const stringifyGameInfo = btoa(JSON.stringify({ game: newGameInfo }));
-      console.log(JSON.parse(atob(stringifyGameInfo)));
-      const url = new URL(window.location.href);
-      url.searchParams.set("game", stringifyGameInfo);
-
-      window.history.pushState({}, "", url);
-      setGameInfo(newGameInfo);
       // Check for a winner
       const isWinner = checkForWinner(row, col);
       if (isWinner) {
@@ -195,7 +218,20 @@ const GomokuContainer = () => {
         setCurrentPlayer(currentPlayer === "black" ? "white" : "black");
       }
 
-      // Redraw the board
+      // save game info
+      const newGamePlay = [...(gameInfo?.game || []), { sequence: (gameInfo?.game || []).length + 1, player: currentPlayer, position: { row, col } }];
+      const newGameInfo: GameInfoType = {
+        id: gameIdRef.current || randomString16(),
+        game: newGamePlay,
+        status: isWinner ? currentPlayer : "continue",
+      };
+
+      const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
+
+      router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
+
+      setGameInfo(newGameInfo);
+
       const ctx = canvas.getContext("2d");
 
       if (ctx) {
@@ -272,15 +308,23 @@ const GomokuContainer = () => {
       count++;
     }
 
-    return count >= 5;
+    return count === 5;
   };
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {
+      return;
+    }
+
+    if (gameIdRef && !gameIdRef.current) {
+      gameIdRef.current = randomString16();
+    }
 
     // Initialize the board
     const initialBoard: string[][] = Array.from({ length: boardSize }, () => Array(boardSize).fill(""));
