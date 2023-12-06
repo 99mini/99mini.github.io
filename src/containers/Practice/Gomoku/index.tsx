@@ -230,6 +230,10 @@ const GomokuContainer = () => {
 
       router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
 
+      if (typeof window !== "undefined") {
+        localStorage.setItem("game", stringifyGameInfo);
+      }
+
       setGameInfo(newGameInfo);
 
       const ctx = canvas.getContext("2d");
@@ -334,6 +338,20 @@ const GomokuContainer = () => {
     drawBoard(ctx);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasRef.current]);
+
+  useEffect(() => {
+    const stringifyGameInfo = searchParams.get("game") || localStorage.getItem("game");
+
+    if (!stringifyGameInfo) {
+      return;
+    }
+
+    const savedGameInfo = JSON.parse(atob(stringifyGameInfo));
+    if (!savedGameInfo) {
+      return;
+    }
+    setGameInfo(savedGameInfo);
+  }, [searchParams]);
 
   return (
     <div className="gomokuGameBoardContainer">
