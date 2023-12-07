@@ -142,7 +142,6 @@ const GomokuContainer = () => {
         ctx.stroke();
       }
 
-      // Draw stones on the board
       for (let row = 0; row < boardSize; row++) {
         for (let col = 0; col < boardSize; col++) {
           const stone = board[row][col];
@@ -315,7 +314,7 @@ const GomokuContainer = () => {
     return count === 5;
   };
 
-  useEffect(() => {
+  const drawInitBoard = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) {
       return;
@@ -340,18 +339,36 @@ const GomokuContainer = () => {
   }, [canvasRef.current]);
 
   useEffect(() => {
+    drawInitBoard();
+  }, [drawInitBoard]);
+
+  useEffect(() => {
+    if (board.length === 0) {
+      return;
+    }
     const stringifyGameInfo = searchParams.get("game") || localStorage.getItem("game");
 
     if (!stringifyGameInfo) {
       return;
     }
 
-    const savedGameInfo = JSON.parse(atob(stringifyGameInfo));
-    if (!savedGameInfo) {
+    router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
+
+    const savedGameInfo: GameInfoType = JSON.parse(atob(stringifyGameInfo));
+    if (savedGameInfo.game.length === 0) {
       return;
     }
+
+    savedGameInfo.game.forEach((stone) => {
+      let newBoard = [...board];
+      newBoard[stone.position.row][stone.position.col] = stone.player;
+      setBoard(newBoard);
+    });
     setGameInfo(savedGameInfo);
-  }, [searchParams]);
+
+    drawInitBoard();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drawInitBoard]);
 
   return (
     <div className="gomokuGameBoardContainer">
