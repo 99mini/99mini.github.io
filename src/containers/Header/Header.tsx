@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useState } from "react";
 import "./Header.scss";
 
 const pathList = {
@@ -11,8 +11,34 @@ const pathList = {
 
 type pathKeyType = keyof typeof pathList;
 
+const MobileNavBar = ({ isOpen }: { isOpen: boolean }) => {
+  return (
+    <div className={`navbarBackground ${isOpen ? "open" : "close"}`}>
+      <div className="mobileNavbarContainerWrapper">
+        <div className={`mobileNavbarContainer`}>
+          <div className="mobileNavbarCard">
+            <ul className="navItemList">
+              {Object.keys(pathList).map((pathKey) => {
+                const path = pathKey as pathKeyType;
+                return (
+                  <li key={path} className="navItem">
+                    <a className={"linkItem"} href={"/" + pathList[path]}>
+                      {pathKey}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Header = () => {
-  const handleMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {};
+  const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
+  const handleMenu = () => setIsOpenDrawer((prev) => !prev);
 
   return (
     <header className={`header dropShadow`}>
@@ -39,6 +65,7 @@ const Header = () => {
           })}
         </ul>
       </nav>
+      {<MobileNavBar isOpen={isOpenDrawer} />}
     </header>
   );
 };
