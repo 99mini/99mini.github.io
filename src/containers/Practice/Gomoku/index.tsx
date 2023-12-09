@@ -340,9 +340,7 @@ const GomokuContainer = () => {
 
   useEffect(() => {
     drawInitBoard();
-  }, [drawInitBoard]);
 
-  useEffect(() => {
     if (board.length === 0) {
       return;
     }
@@ -352,22 +350,35 @@ const GomokuContainer = () => {
       return;
     }
 
-    router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
-
     const savedGameInfo: GameInfoType = JSON.parse(atob(stringifyGameInfo));
+
     if (savedGameInfo.game.length === 0) {
       return;
     }
+
+    router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
 
     savedGameInfo.game.forEach((stone) => {
       let newBoard = [...board];
       newBoard[stone.position.row][stone.position.col] = stone.player;
       setBoard(newBoard);
     });
+
+    setCurrentPlayer(savedGameInfo.game[savedGameInfo.game.length - 1].player === "black" ? "white" : "black");
+    gameIdRef.current = savedGameInfo.id || randomString16();
+
     setGameInfo(savedGameInfo);
 
-    drawInitBoard();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      return;
+    }
+    drawBoard(ctx);
   }, [drawInitBoard]);
 
   return (
