@@ -1,14 +1,18 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 import { randomString16 } from "@/src/Utils";
 import "./index.scss";
-import { Backdrop, Button, CircularProgress } from "@mui/material";
 
 type GameInfoType = {
   id: string;
   game: GamePlayType[];
   status: GameStatusType;
+  history: {
+    black: number;
+    white: number;
+  };
 };
 
 type GamePlayType = {
@@ -24,10 +28,11 @@ type GameStatusType = "continue" | "black" | "white";
 
 const boardSize = 15;
 
-const PlayerInfo = ({ player }: { player: string }) => {
+const PlayerInfo = ({ player, score }: { player: string; score: number }) => {
   return (
     <div>
-      <div>{player}</div>
+      <span>{player} : </span>
+      <span>{score}</span>
     </div>
   );
 };
@@ -44,7 +49,15 @@ const GomokuContainer = () => {
 
   const [canvasStyleCSS, setCanvasStyleCSS] = useState<React.CSSProperties>({});
 
-  const [gameInfo, setGameInfo] = useState<GameInfoType>();
+  const [gameInfo, setGameInfo] = useState<GameInfoType>({
+    id: "",
+    game: [],
+    status: "continue",
+    history: {
+      black: 0,
+      white: 0,
+    },
+  });
 
   const gameIdRef = useRef<string>("");
 
@@ -69,13 +82,34 @@ const GomokuContainer = () => {
     const newGameId = randomString16();
     gameIdRef.current = newGameId;
 
-    setGameInfo({ id: newGameId, game: [], status: "continue" });
+    setGameInfo({ id: newGameId, game: [], status: "continue", history: { black: 0, white: 0 } });
     setCurrentPlayer("black");
     setWinner(null);
     setCanvasStyleCSS({});
 
     router.push(pathname);
-    localStorage.setItem("game", "");
+
+    drawInitBoard();
+    setIsLoading(false);
+  };
+
+  const handleRestart = () => {
+    setIsLoading(true);
+    const newGameId = randomString16();
+    gameIdRef.current = newGameId;
+    const newGameInfo: GameInfoType = { id: newGameId, game: [], status: "continue", history: gameInfo.history };
+    setGameInfo(newGameInfo);
+    setCurrentPlayer("black");
+    setWinner(null);
+    setCanvasStyleCSS({});
+
+    const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
+
+    router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("game", stringifyGameInfo);
+    }
 
     drawInitBoard();
     setIsLoading(false);
@@ -229,8 +263,11 @@ const GomokuContainer = () => {
 
       // Check for a winner
       const isWinner = checkForWinner(row, col);
+      let winnerPlayer;
       if (isWinner) {
-        setWinner(currentPlayer);
+        winnerPlayer = currentPlayer;
+        setWinner(winnerPlayer);
+
         setCanvasStyleCSS({ cursor: "default" });
       } else {
         // Switch player
@@ -238,11 +275,16 @@ const GomokuContainer = () => {
       }
 
       // save game info
-      const newGamePlay = [...(gameInfo?.game || []), { sequence: (gameInfo?.game || []).length + 1, player: currentPlayer, position: { row, col } }];
+      const newGamePlay = [...(gameInfo.game || []), { sequence: (gameInfo.game || []).length + 1, player: currentPlayer, position: { row, col } }];
       const newGameInfo: GameInfoType = {
         id: gameIdRef.current || randomString16(),
         game: newGamePlay,
         status: isWinner ? currentPlayer : "continue",
+        history: winnerPlayer
+          ? winnerPlayer === "black"
+            ? { black: gameInfo.history.black + 1, white: gameInfo.history.white }
+            : { black: gameInfo.history.black, white: gameInfo.history.white + 1 }
+          : gameInfo.history,
       };
 
       const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
@@ -406,15 +448,16 @@ const GomokuContainer = () => {
       <canvas
         ref={canvasRef}
         className="gomokuGameBoard"
-        width={window.innerWidth * 0.6} // Set your desired width
-        height={window.innerWidth * 0.6} // Set your desired height
+        width={Math.min(window.innerWidth, window.innerHeight) - 100} // Set your desired width
+        height={Math.min(window.innerWidth, window.innerHeight) - 100} // Set your desired height
         style={{ ...canvasStyleCSS }}
         onClick={handleCanvasClick}
         onMouseMove={handleCanvasMouseMove}
       />
-      <PlayerInfo player={"black"} />
-      <PlayerInfo player={"white"} />
-      <Button onClick={handleReset}>다시하기</Button>
+      <PlayerInfo player={"black"} score={gameInfo.history.black} />
+      <PlayerInfo player={"white"} score={gameInfo.history.white} />
+      <Button onClick={handleReset}>전체 초기화</Button>
+      <Button onClick={handleRestart}>게임 다시하기</Button>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading} onClick={() => setIsLoading(false)}>
         <CircularProgress color="inherit" />
       </Backdrop>
