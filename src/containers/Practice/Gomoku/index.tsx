@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { randomString16 } from "@/src/Utils";
 import "./index.scss";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 
 type GameInfoType = {
   id: string;
@@ -21,6 +22,8 @@ type GamePlayType = {
 
 type GameStatusType = "continue" | "black" | "white";
 
+const boardSize = 15;
+
 const PlayerInfo = ({ player }: { player: string }) => {
   return (
     <div>
@@ -37,7 +40,7 @@ const GomokuContainer = () => {
     col: 0,
     row: 0,
   });
-  const [winner, setWinner] = useState<string | null>(null);
+  const [winner, setWinner] = useState<"black" | "white" | null>(null);
 
   const [canvasStyleCSS, setCanvasStyleCSS] = useState<React.CSSProperties>({});
 
@@ -49,7 +52,7 @@ const GomokuContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const boardSize = 15;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -60,6 +63,23 @@ const GomokuContainer = () => {
     },
     [searchParams]
   );
+
+  const handleReset = () => {
+    setIsLoading(true);
+    const newGameId = randomString16();
+    gameIdRef.current = newGameId;
+
+    setGameInfo({ id: newGameId, game: [], status: "continue" });
+    setCurrentPlayer("black");
+    setWinner(null);
+    setCanvasStyleCSS({});
+
+    router.push(pathname);
+    localStorage.setItem("game", "");
+
+    drawInitBoard();
+    setIsLoading(false);
+  };
 
   const drawPreviewBoard = (ctx: CanvasRenderingContext2D) => {
     if (!canvasRef.current || !canvasRef.current.width || !canvasRef.current.height) {
@@ -383,7 +403,6 @@ const GomokuContainer = () => {
 
   return (
     <div className="gomokuGameBoardContainer">
-      <PlayerInfo player={"black"} />
       <canvas
         ref={canvasRef}
         className="gomokuGameBoard"
@@ -393,7 +412,12 @@ const GomokuContainer = () => {
         onClick={handleCanvasClick}
         onMouseMove={handleCanvasMouseMove}
       />
+      <PlayerInfo player={"black"} />
       <PlayerInfo player={"white"} />
+      <Button onClick={handleReset}>다시하기</Button>
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading} onClick={() => setIsLoading(false)}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };
