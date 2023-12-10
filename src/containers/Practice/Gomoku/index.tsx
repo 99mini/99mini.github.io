@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
-import { randomString16 } from "@/src/Utils";
+import { createQueryString, randomString16 } from "@/src/Utils";
 import "./index.scss";
 
 type GameInfoType = {
@@ -38,7 +38,10 @@ const PlayerInfo = ({ player, score }: { player: string; score: number }) => {
 };
 
 const GomokuContainer = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [board, setBoard] = useState<string[][]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<"black" | "white">("black");
   const [previewPos, setPreviewPos] = useState<{ col: number; row: number }>({
@@ -58,24 +61,10 @@ const GomokuContainer = () => {
       white: 0,
     },
   });
-
-  const gameIdRef = useRef<string>("");
-
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const gameIdRef = useRef<string>("");
 
   const handleReset = () => {
     setIsLoading(true);
@@ -105,7 +94,7 @@ const GomokuContainer = () => {
 
     const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
 
-    router.replace(pathname + "?" + createQueryString("game", stringifyGameInfo));
+    router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
     if (typeof window !== "undefined") {
       localStorage.setItem("game", stringifyGameInfo);
@@ -289,7 +278,7 @@ const GomokuContainer = () => {
 
       const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
 
-      router.replace(pathname + "?" + createQueryString("game", stringifyGameInfo));
+      router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
       if (typeof window !== "undefined") {
         localStorage.setItem("game", stringifyGameInfo);
@@ -418,7 +407,7 @@ const GomokuContainer = () => {
       return;
     }
 
-    router.replace(pathname + "?" + createQueryString("game", stringifyGameInfo));
+    router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
     savedGameInfo.game.forEach((stone) => {
       let newBoard = [...board];
