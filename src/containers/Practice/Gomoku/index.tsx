@@ -25,7 +25,7 @@ type GamePlayType = {
   };
 };
 
-type GameStatusType = "continue" | "black" | "white";
+type GameStatusType = "black" | "white" | null;
 
 const boardSize = 15;
 
@@ -56,14 +56,14 @@ const GomokuContainer = () => {
   const [gameInfo, setGameInfo] = useState<GameInfoType>({
     id: "",
     game: [],
-    status: "continue",
+    status: null,
     history: {
       black: 0,
       white: 0,
     },
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const gameIdRef = useRef<string>("");
@@ -73,7 +73,7 @@ const GomokuContainer = () => {
     const newGameId = randomString16();
     gameIdRef.current = newGameId;
 
-    setGameInfo({ id: newGameId, game: [], status: "continue", history: { black: 0, white: 0 } });
+    setGameInfo({ id: newGameId, game: [], status: null, history: { black: 0, white: 0 } });
     setCurrentPlayer("black");
     setWinner(null);
     setCanvasStyleCSS({});
@@ -88,7 +88,7 @@ const GomokuContainer = () => {
     setIsLoading(true);
     const newGameId = randomString16();
     gameIdRef.current = newGameId;
-    const newGameInfo: GameInfoType = { id: newGameId, game: [], status: "continue", history: gameInfo.history };
+    const newGameInfo: GameInfoType = { id: newGameId, game: [], status: null, history: gameInfo.history };
     setGameInfo(newGameInfo);
     setCurrentPlayer("black");
     setWinner(null);
@@ -258,6 +258,7 @@ const GomokuContainer = () => {
       if (isWinner) {
         winnerPlayer = currentPlayer;
         setWinner(winnerPlayer);
+        setIsModalOpen(true);
 
         setCanvasStyleCSS({ cursor: "default" });
       } else {
@@ -270,7 +271,7 @@ const GomokuContainer = () => {
       const newGameInfo: GameInfoType = {
         id: gameIdRef.current || randomString16(),
         game: newGamePlay,
-        status: isWinner ? currentPlayer : "continue",
+        status: isWinner ? currentPlayer : null,
         history: winnerPlayer
           ? winnerPlayer === "black"
             ? { black: gameInfo.history.black + 1, white: gameInfo.history.white }
@@ -421,6 +422,7 @@ const GomokuContainer = () => {
     gameIdRef.current = savedGameInfo.id || randomString16();
 
     setGameInfo(savedGameInfo);
+    setWinner(savedGameInfo.status);
 
     const canvas = canvasRef.current;
     if (!canvas) {
@@ -432,6 +434,10 @@ const GomokuContainer = () => {
       return;
     }
     drawBoard(ctx);
+
+    if (savedGameInfo.status) {
+      setIsModalOpen(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawInitBoard]);
 
@@ -454,7 +460,7 @@ const GomokuContainer = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <YMModal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <YMModal.YMTitle>{currentPlayer}가 이겼습니다!</YMModal.YMTitle>
+        <YMModal.YMTitle>{winner}가 이겼습니다!</YMModal.YMTitle>
         <YMModal.YMContext>새로운 게임을 하시겠습니까?</YMModal.YMContext>
         <div>
           <YMModal.YMButton modalButtonType="cancel" onClick={() => setIsModalOpen(false)}>
