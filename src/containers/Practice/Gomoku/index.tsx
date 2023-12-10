@@ -87,7 +87,7 @@ const GomokuContainer = () => {
     setWinner(null);
     setCanvasStyleCSS({});
 
-    router.push(pathname);
+    router.replace(pathname);
 
     drawInitBoard();
     setIsLoading(false);
@@ -105,7 +105,7 @@ const GomokuContainer = () => {
 
     const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
 
-    router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
+    router.replace(pathname + "?" + createQueryString("game", stringifyGameInfo));
 
     if (typeof window !== "undefined") {
       localStorage.setItem("game", stringifyGameInfo);
@@ -289,7 +289,7 @@ const GomokuContainer = () => {
 
       const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
 
-      router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
+      router.replace(pathname + "?" + createQueryString("game", stringifyGameInfo));
 
       if (typeof window !== "undefined") {
         localStorage.setItem("game", stringifyGameInfo);
@@ -418,7 +418,7 @@ const GomokuContainer = () => {
       return;
     }
 
-    router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
+    router.replace(pathname + "?" + createQueryString("game", stringifyGameInfo));
 
     savedGameInfo.game.forEach((stone) => {
       let newBoard = [...board];
