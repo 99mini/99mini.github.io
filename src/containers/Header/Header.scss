@@ -7,7 +7,7 @@
 @use "/src/sass/base/colors";
 @use "/src/sass/base/animations";
 
-@use "/src/sass/components/cards";
+@use "/src/sass/components/card";
 
 .header {
   width: 100%;
@@ -42,7 +42,7 @@
   &.dropShadow {
     backdrop-filter: blur(8px);
 
-    box-shadow: cards.$card-box-shadow;
+    box-shadow: card.$card-box-shadow;
   }
 
   .ghostContainer {
@@ -148,7 +148,7 @@
       margin: variables.$page-padding;
 
       .mobileNavbarCard {
-        @include cards.card;
+        @include card.card;
         .navItemList {
           display: flex;
           flex-direction: column;

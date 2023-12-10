@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
 import { createQueryString, randomString16 } from "@/src/Utils";
 import "./index.scss";
+import { YMModal } from "@/src/components";
 
 type GameInfoType = {
   id: string;
@@ -62,6 +63,7 @@ const GomokuContainer = () => {
     },
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const gameIdRef = useRef<string>("");
@@ -430,6 +432,7 @@ const GomokuContainer = () => {
       return;
     }
     drawBoard(ctx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawInitBoard]);
 
   return (
@@ -437,19 +440,37 @@ const GomokuContainer = () => {
       <canvas
         ref={canvasRef}
         className="gomokuGameBoard"
-        width={Math.min(window.innerWidth, window.innerHeight) - 100} // Set your desired width
-        height={Math.min(window.innerWidth, window.innerHeight) - 100} // Set your desired height
+        width={Math.min(window.innerWidth, window.innerHeight) - 100}
+        height={Math.min(window.innerWidth, window.innerHeight) - 100}
         style={{ ...canvasStyleCSS }}
         onClick={handleCanvasClick}
         onMouseMove={handleCanvasMouseMove}
       />
-      <PlayerInfo player={"black"} score={gameInfo.history.black} />
-      <PlayerInfo player={"white"} score={gameInfo.history.white} />
+      <PlayerInfo player={"black"} score={gameInfo?.history?.black || 0} />
+      <PlayerInfo player={"white"} score={gameInfo?.history?.white || 0} />
       <Button onClick={handleReset}>전체 초기화</Button>
       <Button onClick={handleRestart}>게임 다시하기</Button>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading} onClick={() => setIsLoading(false)}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      <YMModal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <YMModal.YMTitle>{currentPlayer}가 이겼습니다!</YMModal.YMTitle>
+        <YMModal.YMContext>새로운 게임을 하시겠습니까?</YMModal.YMContext>
+        <div>
+          <YMModal.YMButton modalButtonType="cancel" onClick={() => setIsModalOpen(false)}>
+            닫기
+          </YMModal.YMButton>
+          <YMModal.YMButton
+            modalButtonType="submit"
+            onClick={() => {
+              handleRestart();
+              setIsModalOpen(false);
+            }}
+          >
+            새로운 게임 시작하기
+          </YMModal.YMButton>
+        </div>
+      </YMModal>
     </div>
   );
 };

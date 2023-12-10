@@ -1,13 +1,13 @@
-@use "src/sass/components/_cards.scss";
+@use "src/sass/components/card";
 
-@use "src/sass/base/_typography.scss";
-@use "src/sass/base/_colors.scss";
+@use "src/sass/base/typography";
+@use "src/sass/base/colors";
 
 .aboutLayout {
-  @include cards.cardColumnLayout;
+  @include card.cardColumnLayout;
 
   .aboutCard {
-    @include cards.card;
+    @include card.card;
 
     .cardTitle {
       font-size: typography.$font-size-2xl;
