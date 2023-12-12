@@ -43,7 +43,7 @@ export const getPR = async (prNumber: number) => {
   }
 };
 
-export const getRepo = async (state: TPRState = "closed", category: TPRCategory = "release") => {
+export const getRepo = async (state: TPRState = "closed") => {
   try {
     const { data: resData, status } = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
       owner: owner,
@@ -58,10 +58,8 @@ export const getRepo = async (state: TPRState = "closed", category: TPRCategory 
       return null;
     }
 
-    const releaseReg = /\[(release)\]/gim;
-
     const data = resData
-      .filter((item) => releaseReg.test(item.title))
+      .filter((item) => item.labels.some((label) => label.name.toLowerCase() === "release".toLowerCase()))
       .map((item) => {
         const releaseVersionMatched = item.title.match(/v\d+\.\d+\.\d/);
         let releaseVersion = "";
