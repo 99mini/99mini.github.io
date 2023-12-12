@@ -43,7 +43,7 @@ export const getPR = async (prNumber: number) => {
   }
 };
 
-export const getRepo = async (state: TPRState = "closed") => {
+export const getReleasePR = async (state: TPRState = "closed") => {
   try {
     // TODO pr이 100개가 넘어가면 페이징 기법 적용
     const { data: resData, status } = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
