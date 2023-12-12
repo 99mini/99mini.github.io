@@ -45,10 +45,12 @@ export const getPR = async (prNumber: number) => {
 
 export const getRepo = async (state: TPRState = "closed") => {
   try {
+    // TODO pr이 100개가 넘어가면 페이징 기법 적용
     const { data: resData, status } = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
       owner: owner,
       repo: repo,
       state: state,
+      per_page: 100,
       headers: {
         "X-GitHub-Api-Version": "2022-11-28",
       },
