@@ -2,7 +2,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
-import { randomString16 } from "@/src/Utils";
+import { YMModal } from "@/src/components";
+import { createQueryString, decodeBase64, encodeBase64, randomString16 } from "@/src/Utils";
 import "./index.scss";
 
 type GameInfoType = {
@@ -24,7 +25,7 @@ type GamePlayType = {
   };
 };
 
-type GameStatusType = "continue" | "black" | "white";
+type GameStatusType = "black" | "white" | null;
 
 const boardSize = 15;
 
@@ -38,7 +39,10 @@ const PlayerInfo = ({ player, score }: { player: string; score: number }) => {
 };
 
 const GomokuContainer = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [board, setBoard] = useState<string[][]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<"black" | "white">("black");
   const [previewPos, setPreviewPos] = useState<{ col: number; row: number }>({
@@ -52,42 +56,29 @@ const GomokuContainer = () => {
   const [gameInfo, setGameInfo] = useState<GameInfoType>({
     id: "",
     game: [],
-    status: "continue",
+    status: null,
     history: {
       black: 0,
       white: 0,
     },
   });
-
-  const gameIdRef = useRef<string>("");
-
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const gameIdRef = useRef<string>("");
 
   const handleReset = () => {
     setIsLoading(true);
     const newGameId = randomString16();
     gameIdRef.current = newGameId;
 
-    setGameInfo({ id: newGameId, game: [], status: "continue", history: { black: 0, white: 0 } });
+    setGameInfo({ id: newGameId, game: [], status: null, history: { black: 0, white: 0 } });
     setCurrentPlayer("black");
     setWinner(null);
     setCanvasStyleCSS({});
 
-    router.push(pathname);
+    router.replace(pathname);
 
     drawInitBoard();
     setIsLoading(false);
@@ -97,15 +88,15 @@ const GomokuContainer = () => {
     setIsLoading(true);
     const newGameId = randomString16();
     gameIdRef.current = newGameId;
-    const newGameInfo: GameInfoType = { id: newGameId, game: [], status: "continue", history: gameInfo.history };
+    const newGameInfo: GameInfoType = { id: newGameId, game: [], status: null, history: gameInfo.history };
     setGameInfo(newGameInfo);
     setCurrentPlayer("black");
     setWinner(null);
     setCanvasStyleCSS({});
 
-    const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
+    const stringifyGameInfo = encodeBase64(JSON.stringify(newGameInfo));
 
-    router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
+    router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
     if (typeof window !== "undefined") {
       localStorage.setItem("game", stringifyGameInfo);
@@ -267,6 +258,7 @@ const GomokuContainer = () => {
       if (isWinner) {
         winnerPlayer = currentPlayer;
         setWinner(winnerPlayer);
+        setIsModalOpen(true);
 
         setCanvasStyleCSS({ cursor: "default" });
       } else {
@@ -279,7 +271,7 @@ const GomokuContainer = () => {
       const newGameInfo: GameInfoType = {
         id: gameIdRef.current || randomString16(),
         game: newGamePlay,
-        status: isWinner ? currentPlayer : "continue",
+        status: isWinner ? currentPlayer : null,
         history: winnerPlayer
           ? winnerPlayer === "black"
             ? { black: gameInfo.history.black + 1, white: gameInfo.history.white }
@@ -287,9 +279,9 @@ const GomokuContainer = () => {
           : gameInfo.history,
       };
 
-      const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
+      const stringifyGameInfo = encodeBase64(JSON.stringify(newGameInfo));
 
-      router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
+      router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
       if (typeof window !== "undefined") {
         localStorage.setItem("game", stringifyGameInfo);
@@ -350,7 +342,7 @@ const GomokuContainer = () => {
     let count = 1; // Count the first stone
 
     // Check in one direction
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 6; i++) {
       const newRow = startRow + i * rowIncrement;
       const newCol = startCol + i * colIncrement;
 
@@ -362,7 +354,7 @@ const GomokuContainer = () => {
     }
 
     // Check in the opposite direction
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 6; i++) {
       const newRow = startRow - i * rowIncrement;
       const newCol = startCol - i * colIncrement;
 
@@ -411,14 +403,18 @@ const GomokuContainer = () => {
     if (!stringifyGameInfo) {
       return;
     }
+    const savedGameInfo: GameInfoType = decodeBase64(stringifyGameInfo);
 
-    const savedGameInfo: GameInfoType = JSON.parse(atob(stringifyGameInfo));
+    router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
+
+    gameIdRef.current = savedGameInfo.id || randomString16();
+
+    setGameInfo(savedGameInfo);
+    setWinner(savedGameInfo.status);
 
     if (savedGameInfo.game.length === 0) {
       return;
     }
-
-    router.push(pathname + "?" + createQueryString("game", stringifyGameInfo));
 
     savedGameInfo.game.forEach((stone) => {
       let newBoard = [...board];
@@ -427,9 +423,6 @@ const GomokuContainer = () => {
     });
 
     setCurrentPlayer(savedGameInfo.game[savedGameInfo.game.length - 1].player === "black" ? "white" : "black");
-    gameIdRef.current = savedGameInfo.id || randomString16();
-
-    setGameInfo(savedGameInfo);
 
     const canvas = canvasRef.current;
     if (!canvas) {
@@ -441,6 +434,11 @@ const GomokuContainer = () => {
       return;
     }
     drawBoard(ctx);
+
+    if (savedGameInfo.status) {
+      setIsModalOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawInitBoard]);
 
   return (
@@ -448,19 +446,37 @@ const GomokuContainer = () => {
       <canvas
         ref={canvasRef}
         className="gomokuGameBoard"
-        width={Math.min(window.innerWidth, window.innerHeight) - 100} // Set your desired width
-        height={Math.min(window.innerWidth, window.innerHeight) - 100} // Set your desired height
+        width={Math.min(window.innerWidth, window.innerHeight) - 100}
+        height={Math.min(window.innerWidth, window.innerHeight) - 100}
         style={{ ...canvasStyleCSS }}
         onClick={handleCanvasClick}
         onMouseMove={handleCanvasMouseMove}
       />
-      <PlayerInfo player={"black"} score={gameInfo.history.black} />
-      <PlayerInfo player={"white"} score={gameInfo.history.white} />
+      <PlayerInfo player={"black"} score={gameInfo?.history?.black || 0} />
+      <PlayerInfo player={"white"} score={gameInfo?.history?.white || 0} />
       <Button onClick={handleReset}>전체 초기화</Button>
       <Button onClick={handleRestart}>게임 다시하기</Button>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading} onClick={() => setIsLoading(false)}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      <YMModal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <YMModal.YMTitle>{winner}가 이겼습니다!</YMModal.YMTitle>
+        <YMModal.YMContext>새로운 게임을 하시겠습니까?</YMModal.YMContext>
+        <div>
+          <YMModal.YMButton modalButtonType="cancel" onClick={() => setIsModalOpen(false)}>
+            닫기
+          </YMModal.YMButton>
+          <YMModal.YMButton
+            modalButtonType="submit"
+            onClick={() => {
+              handleRestart();
+              setIsModalOpen(false);
+            }}
+          >
+            새로운 게임 시작하기
+          </YMModal.YMButton>
+        </div>
+      </YMModal>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
-import PageTitle from "@/src/components/PageTitle/PageTitle";
-import "./SkillStack.scss";
 import { useEffect, useState } from "react";
+import { PageTitle } from "@/src/components";
+import "./SkillStack.scss";
 
 const skillStackText = ["HTML", "CSS", "JAVASCRIPT", "TYPESCRIPT", "REACTJS", "NEXTJS", "POSTGRES"];
 

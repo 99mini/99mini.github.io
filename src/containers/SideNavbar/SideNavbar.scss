@@ -5,7 +5,7 @@
 @use "/src/sass/layout/header";
 @use "/src/sass/layout/breakpoint";
 
-@use "/src/sass/components/cards";
+@use "/src/sass/components/card";
 
 .asideNavbar {
   position: fixed;
@@ -19,7 +19,7 @@
     bottom: 20px;
   }
 
-  @include cards.card;
+  @include card.card;
   padding: 8px;
 
   display: none;

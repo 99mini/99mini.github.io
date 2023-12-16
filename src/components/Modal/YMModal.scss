@@ -1,0 +1,70 @@
+@use "/src/sass/base/colors";
+@use "/src/sass/base/typography";
+@use "/src/sass/components/button";
+
+.YMBackDrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  background-color: rgba(30, 30, 30, 0.5);
+
+  z-index: 1;
+
+  .YMModalWrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .YMModalContainer {
+      display: flex;
+      flex-direction: column;
+
+      gap: 8px;
+
+      padding: 12px;
+      border-radius: 8px;
+
+      color: colors.$font-color-normal;
+      background-color: rgb(255, 255, 255);
+
+      .YMTitle {
+        font-size: typography.$font-size-xl;
+        font-weight: typography.$font-weight-bold;
+        color: colors.$font-color-bold;
+      }
+
+      .YMContext {
+        font-size: typography.$font-size-default;
+        color: colors.$font-color-normal;
+      }
+
+      .YMButton {
+        padding: 8px 12px;
+        border-radius: 8px;
+
+        font-size: typography.$font-size-default;
+
+        &:hover {
+          background-color: button.$hover-background-color;
+        }
+
+        &:disabled {
+          color: colors.$disable-color;
+        }
+        &.cancelButton {
+          color: colors.$error-color;
+        }
+        &.submitButton {
+          color: colors.$primary-color;
+        }
+        &.defaultButton {
+          color: colors.$font-color-normal;
+        }
+      }
+    }
+  }
+}
