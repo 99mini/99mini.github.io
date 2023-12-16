@@ -1,8 +1,8 @@
 import { MainSection, Release } from "@/src/containers";
-import { getRepo } from "./lib/get-repo";
+import { getReleasePR } from "./lib/get-repo";
 
 const ReleasePage = async () => {
-  const data = await getRepo();
+  const data = await getReleasePR();
   return (
     <MainSection>
       <Release data={data} />

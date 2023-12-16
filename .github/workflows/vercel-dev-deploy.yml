@@ -1,12 +1,11 @@
-name: Production Tag Deployment
+name: Dev Vercel Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
   push:
     branches: ["release/**"]
-    tags:
-      - "*" # Push events to every tag not containing /
+
 jobs:
   Deploy-Production:
     runs-on: ubuntu-latest

@@ -1,6 +1,6 @@
 "use client";
 import { PRType, getPR } from "@/src/app/release/lib/get-repo";
-import PageTitle from "@/src/components/PageTitle/PageTitle";
+import { PageTitle } from "@/src/components";
 import { useScrollAnimation } from "@/src/hook";
 import moment from "moment";
 import { useEffect, useState } from "react";

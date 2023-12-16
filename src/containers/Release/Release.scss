@@ -1,12 +1,12 @@
 @use "/src/sass/base/colors";
 @use "/src/sass/base/typography";
-@use "/src/sass/components/cards";
+@use "/src/sass/components/card";
 
 .releaseCardArea {
-  @include cards.cardColumnLayout;
+  @include card.cardColumnLayout;
 
   .releaseCard {
-    @include cards.card;
+    @include card.card;
 
     .titleArea {
       padding-bottom: 8px;

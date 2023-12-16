@@ -3,7 +3,7 @@ import { useScrollAnimation } from "@/src/hook";
 import "./About.scss";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import PageTitle from "@/src/components/PageTitle/PageTitle";
+import { PageTitle } from "@/src/components";
 
 const AboutCard = ({ title, markdownContent }: { title: string; markdownContent: string }) => {
   const { ref, style } = useScrollAnimation();
