@@ -2,9 +2,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
-import { createQueryString, randomString16 } from "@/src/Utils";
-import "./index.scss";
 import { YMModal } from "@/src/components";
+import { createQueryString, decodeBase64, encodeBase64, randomString16 } from "@/src/Utils";
+import "./index.scss";
 
 type GameInfoType = {
   id: string;
@@ -94,7 +94,7 @@ const GomokuContainer = () => {
     setWinner(null);
     setCanvasStyleCSS({});
 
-    const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
+    const stringifyGameInfo = encodeBase64(JSON.stringify(newGameInfo));
 
     router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
@@ -279,7 +279,7 @@ const GomokuContainer = () => {
           : gameInfo.history,
       };
 
-      const stringifyGameInfo = btoa(JSON.stringify(newGameInfo));
+      const stringifyGameInfo = encodeBase64(JSON.stringify(newGameInfo));
 
       router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
@@ -342,7 +342,7 @@ const GomokuContainer = () => {
     let count = 1; // Count the first stone
 
     // Check in one direction
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 6; i++) {
       const newRow = startRow + i * rowIncrement;
       const newCol = startCol + i * colIncrement;
 
@@ -354,7 +354,7 @@ const GomokuContainer = () => {
     }
 
     // Check in the opposite direction
-    for (let i = 1; i < 5; i++) {
+    for (let i = 1; i < 6; i++) {
       const newRow = startRow - i * rowIncrement;
       const newCol = startCol - i * colIncrement;
 
@@ -403,14 +403,18 @@ const GomokuContainer = () => {
     if (!stringifyGameInfo) {
       return;
     }
+    const savedGameInfo: GameInfoType = decodeBase64(stringifyGameInfo);
 
-    const savedGameInfo: GameInfoType = JSON.parse(atob(stringifyGameInfo));
+    router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
+
+    gameIdRef.current = savedGameInfo.id || randomString16();
+
+    setGameInfo(savedGameInfo);
+    setWinner(savedGameInfo.status);
 
     if (savedGameInfo.game.length === 0) {
       return;
     }
-
-    router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
     savedGameInfo.game.forEach((stone) => {
       let newBoard = [...board];
@@ -419,10 +423,6 @@ const GomokuContainer = () => {
     });
 
     setCurrentPlayer(savedGameInfo.game[savedGameInfo.game.length - 1].player === "black" ? "white" : "black");
-    gameIdRef.current = savedGameInfo.id || randomString16();
-
-    setGameInfo(savedGameInfo);
-    setWinner(savedGameInfo.status);
 
     const canvas = canvasRef.current;
     if (!canvas) {
