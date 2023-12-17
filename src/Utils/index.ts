@@ -17,7 +17,7 @@ export const concatClassName = (className: string, givenClassName: string = "") 
  * @param target
  * @returns Return encoded string
  */
-export const encodeBase64 = (target: any) => {
+export const encodeBase64 = (target: any): string => {
   let jsonString = target;
 
   if (typeof target !== "string") {
@@ -30,10 +30,14 @@ export const encodeBase64 = (target: any) => {
 /**
  *
  * @param encodedString
- * @returns Return object parsing json
+ * @returns Return object parsing json. If param is invalid, return null
  */
-export const decodeBase64 = (encodedString: string) => {
+export const decodeBase64 = (encodedString: string): any | null => {
   const jsonString = LZString.decompressFromBase64(encodedString);
+
+  if (!jsonString) {
+    return null;
+  }
 
   const decodedObj = JSON.parse(jsonString);
 
