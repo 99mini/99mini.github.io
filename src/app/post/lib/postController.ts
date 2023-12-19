@@ -20,6 +20,10 @@ export const getPostList = async () => {
     .then((response) => response.results)
     .catch((err) => console.error(err));
 
+  if (!data) {
+    return [];
+  }
+
   data.filter((postItem) => postItem.properties.visibility.status.name === "public");
   return data;
 };
