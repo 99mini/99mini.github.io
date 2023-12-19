@@ -1,9 +1,9 @@
 import React from "react";
 import PostContainer from "@/src/containers/Post";
-import { getNotionPost } from "./lib/get-post";
+import { getPostList } from "./lib/postController";
 
 const PostPage = async () => {
-  const data = await getNotionPost();
+  const data = await getPostList();
 
   return <PostContainer data={data} />;
 };
