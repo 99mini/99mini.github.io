@@ -1,6 +1,15 @@
-const PostContainer = ({ data }: { data: any }) => {
-  console.log(data);
-  return <div></div>;
+import Link from "next/link";
+
+const PostContainer = ({ data }: { data: any[] }) => {
+  return (
+    <div>
+      {data.map((postItem) => (
+        <Link key={postItem.id} href={postItem.id}>
+          {postItem.id}
+        </Link>
+      ))}
+    </div>
+  );
 };
 
 export default PostContainer;
