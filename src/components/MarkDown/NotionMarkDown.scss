@@ -35,14 +35,43 @@
     }
   }
 
-  code {
-    &.inline {
-      padding: 0.2em 0.4em;
-      margin: 0;
-      white-space: break-spaces;
-      background-color: rgba(175, 184, 193, 0.2);
-      border-radius: 6px;
+  .codeBlock {
+    position: relative;
+
+    .clipboardContainer {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      transition: all 0.25s ease-in-out;
+      &:hover {
+        .clipboard {
+          background-color: rgba(175, 184, 193, 0.2);
+        }
+      }
+      .clipboardHelpText {
+        opacity: 0;
+
+        font-family: "Pretendard";
+        margin-right: 8px;
+        color: rgb(128, 128, 128);
+        font-size: 1rem;
+
+        &.copied {
+          opacity: 1;
+        }
+      }
     }
+  }
+
+  code.inline {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    white-space: break-spaces;
+    background-color: rgba(175, 184, 193, 0.2);
+    border-radius: 6px;
+
+    font-family: Inconsolata, Monaco, Consolas, "Courier New", Courier, monospace;
   }
 
   table {
@@ -74,8 +103,8 @@
   li,
   ol,
   ul {
-    list-style: initial;
-    padding: initial;
+    list-style: revert;
+    padding: revert;
 
     &.contains-task-list {
       list-style: none;
