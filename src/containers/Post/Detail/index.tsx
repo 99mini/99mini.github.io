@@ -1,9 +1,8 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { NotionMarkDown } from "@/src/components/MarkDown";
 
 function PostDetailContainer({ rawMD }: { rawMD: string }) {
-  return <ReactMarkdown remarkPlugins={[remarkGfm]}>{rawMD}</ReactMarkdown>;
+  return <NotionMarkDown post={rawMD} />;
 }
 
 export default PostDetailContainer;
