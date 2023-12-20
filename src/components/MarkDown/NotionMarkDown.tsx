@@ -7,30 +7,29 @@ import remarkGfm from "remark-gfm";
 import "./NotionMarkDown.scss";
 
 const NotionMarkDown = ({ post }: { post: string }) => {
+  console.log(post);
   return (
-    <div>
+    <div className="notionMarkDownCard">
       <Markdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
         components={{
-          code: ({ className, inline, children, ...props }) => {
+          code: ({ className, inline, children }) => {
             const match = /language-(\w+)/.exec(className || "");
             if (!inline && match) {
               return (
-                <SyntaxHighlighter language={match[1]} style={atomDark} PreTag="div" {...props}>
-                  {String(children).replace(/\n$/, "")}
-                </SyntaxHighlighter>
+                <>
+                  <SyntaxHighlighter language={match[1]} style={atomDark} PreTag="div">
+                    {String(children).replace(/\n$/, "")}
+                  </SyntaxHighlighter>
+                </>
               );
             }
-            return (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            );
+            return <code className={"inline"}>{children}</code>;
           },
         }}
       >
-        {post}
+        {`${post}`}
       </Markdown>
     </div>
   );

@@ -1,0 +1,96 @@
+@use "src/sass/components/card";
+@use "/src/sass/base/colors";
+
+.notionMarkDownCard {
+  @include card.card;
+
+  p,
+  a,
+  table,
+  blockquote,
+  summary,
+  ul,
+  ol {
+    margin-bottom: 16px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    margin: revert;
+  }
+
+  hr {
+    margin: 0.5rem 0;
+  }
+
+  a {
+    background-color: transparent;
+    color: colors.$primary-color;
+    text-decoration: none;
+
+    &:hover {
+      text-underline-offset: 0.2rem;
+      text-decoration-line: underline;
+    }
+  }
+
+  code {
+    &.inline {
+      padding: 0.2em 0.4em;
+      margin: 0;
+      white-space: break-spaces;
+      background-color: rgba(175, 184, 193, 0.2);
+      border-radius: 6px;
+    }
+  }
+
+  table {
+    margin-bottom: 16px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+
+    tr {
+      background-color: rgb(255, 255, 255);
+      border-top: 1px solid rgb(216, 222, 228);
+    }
+    th,
+    td {
+      padding: 6px 13px;
+      border: 1px solid rgb(208, 215, 222);
+    }
+  }
+
+  blockquote {
+    padding: 0 1em;
+    color: rgb(101, 109, 118);
+    border-left: 0.25em solid rgb(208, 215, 222);
+  }
+
+  li,
+  ol,
+  ul {
+    list-style: initial;
+    padding: initial;
+
+    &.contains-task-list {
+      list-style: none;
+      .task-list-item {
+        list-style: none;
+      }
+    }
+  }
+
+  ul,
+  ol {
+    padding-left: 2em;
+  }
+
+  summary ~ * {
+    padding-left: 1em;
+  }
+}
