@@ -32,21 +32,7 @@ class PostController {
   }
 
   public getPostList = async () => {
-    const options = {
-      method: "POST",
-      headers: this.headers,
-    };
-
-    const data: any[] = await fetch(`${PostConfig.NOTION_API_BASE_URL}/databases/${PostConfig.NOTION_DB_ID}/query`, options)
-      .then((response) => response.json())
-      .then((response) => response.results)
-      .catch((err) => console.error(err));
-
-    if (!data) {
-      return [];
-    }
-
-    const res = data.filter((postItem) => postItem.properties.visibility?.status?.name === "public");
+    const res = await this.postService.getPostList();
 
     return res;
   };

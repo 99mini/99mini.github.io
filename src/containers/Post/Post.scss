@@ -1,0 +1,67 @@
+@use "/src/sass/base/colors";
+@use "/src/sass/base/typography";
+@use "/src/sass/base/animations";
+@use "/src/sass/components/card";
+@use "/src/sass/layout/breakpoint";
+
+.postCard {
+  @include card.card;
+
+  display: flex;
+  gap: 48px;
+
+  @media (max-width: breakpoint.$mobile) {
+    flex-direction: column;
+    gap: 20px;
+    .thumbnail {
+      width: auto;
+      height: 200px;
+    }
+  }
+
+  &:hover {
+    .title {
+      color: colors.$primary-color;
+    }
+  }
+
+  .postCardContent {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    .title {
+      font-size: typography.$font-size-largest;
+      font-weight: typography.$font-weight-bold;
+
+      @include animations.hover-transition-color;
+    }
+
+    .abstract {
+      font-size: typography.$font-size-lg;
+      font-weight: typography.$font-weight-normal;
+    }
+
+    .updatedAt {
+      font-size: typography.$font-size-default;
+      font-weight: typography.$font-weight-normal;
+
+      color: colors.$font-color-light;
+    }
+
+    @media (max-width: breakpoint.$mobile) {
+      .title {
+        font-size: typography.$font-size-2xl;
+      }
+
+      .abstract {
+        font-size: typography.$font-size-default;
+      }
+
+      .updatedAt {
+        font-size: typography.$font-size-md;
+      }
+    }
+  }
+}
