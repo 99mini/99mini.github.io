@@ -8,7 +8,7 @@ const PostContainer = ({ data }: { data: PostEntity[] }) => {
   return (
     <div>
       {data.map((postItem) => (
-        <Link key={postItem.id} href={postItem.id}>
+        <Link key={postItem.id} href={`post/${postItem.id}`}>
           <div className="postCard">
             <Image className="thumbnail" src={postItem.thumbnail} width={240} height={240} alt={postItem.title} />
             <div className="postCardContent">
