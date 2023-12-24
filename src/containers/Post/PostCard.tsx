@@ -10,13 +10,13 @@ const PostCard = ({ postItem }: { postItem: PostEntity }) => {
 
   return (
     <div className="postCard" ref={ref} style={{ ...animationStyle }}>
-      <Link href={postItem.id}>
+      <Link className="thumbnailAnchor" href={postItem.id} title={`${postItem.title} 보러가기`}>
         <Image className="thumbnail" src={postItem.thumbnail} width={240} height={240} alt={postItem.title} />
       </Link>
       <div className="postCardContent">
-        <Link href={postItem.id}>
-          <div className="title">{postItem.title}</div>
-          <div className="abstract">{postItem.abstract}</div>
+        <Link className="detailAnchor" href={postItem.id} title={`${postItem.title} 보러가기`}>
+          <h3 className="title">{postItem.title}</h3>
+          <h4 className="abstract">{postItem.abstract}</h4>
         </Link>
         <div className="cardInfo">
           <span>{moment(postItem.updatedAt).format("YYYY-MM-DD")}</span>

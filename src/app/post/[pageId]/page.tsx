@@ -10,8 +10,11 @@ export const generateStaticParams = async () => {
 };
 
 const PostPage = async ({ params }: { params: { pageId: string } }) => {
-  const rawMD = await new Post().getPostPage(params.pageId);
-  return <PostDetailContainer rawMD={rawMD} />;
+  const post = new Post();
+  const rawMD = await post.getPostPage(params.pageId);
+  const titleRes = await post.getPostPageProperty(params.pageId, "title");
+  const title = titleRes.results[0]?.title.plain_text || "";
+  return <PostDetailContainer rawMD={rawMD} title={title} />;
 };
 
 export default PostPage;
