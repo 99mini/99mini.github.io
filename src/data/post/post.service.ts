@@ -18,6 +18,8 @@ class PostService {
     "Notion-Version": "2022-06-28",
     "content-type": "application/json",
   };
+
+  private users: UserEntity = {};
   constructor() {
     this.notion = new Client({
       auth: PostConfig.NOTION_AUTH_TOKEN,
@@ -29,12 +31,18 @@ class PostService {
       "Notion-Version": "2022-06-28",
       "content-type": "application/json",
     };
+
+    const options = {
+      method: "GET",
+      headers: this.headers,
+    };
   }
 
   public static getInstance() {
     if (!PostService.instance) {
       PostService.instance = new PostService();
     }
+
     return PostService.instance;
   }
 
@@ -59,19 +67,46 @@ class PostService {
       return [];
     }
 
+    const allUsers = await this.getUsers();
     const res: PostEntity[] = data
       .filter((postItem) => postItem.properties.visibility?.status?.name === "public")
-      .map((filteredItem) => ({
-        id: filteredItem.id,
-        createdAt: filteredItem.created_time,
-        updatedAt: filteredItem.last_edited_time,
-        author: filteredItem.created_by.id,
-        thumbnail: filteredItem.cover || "",
-        abstract: filteredItem.properties.abstract.rich_text[0]?.plain_text,
-        title: filteredItem.properties.title.title[0]?.plain_text,
-        tags: filteredItem.properties.tags.multi_select,
-      }));
+      .map((filteredItem) => {
+        return {
+          id: filteredItem.id,
+          createdAt: filteredItem.created_time,
+          updatedAt: filteredItem.last_edited_time,
+          author: allUsers[filteredItem.created_by.id]?.name,
+          authorAvatar: allUsers[filteredItem.created_by.id]?.avatarUrl,
+          thumbnail: filteredItem.cover || "",
+          abstract: filteredItem.properties.abstract.rich_text[0]?.plain_text,
+          title: filteredItem.properties.title.title[0]?.plain_text,
+          tags: filteredItem.properties.tags.multi_select,
+        };
+      });
     return res;
+  };
+
+  public getUsers = async (): Promise<UserEntity> => {
+    const options = {
+      method: "GET",
+      headers: this.headers,
+    };
+
+    const data: { object: string; id: string; name: string; avatar_url: string; type: string; person: any }[] = await fetch(
+      `${PostConfig.NOTION_API_BASE_URL}/users`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => response.results)
+      .catch((err) => console.error(err));
+
+    if (!data) {
+      return {};
+    }
+    const allUsers: UserEntity = {};
+    data.forEach((item) => (allUsers[item.id] = { name: item.name, avatarUrl: item.avatar_url }));
+    this.users = { ...allUsers };
+    return allUsers;
   };
 }
 

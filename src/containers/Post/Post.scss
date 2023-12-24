@@ -31,6 +31,8 @@
 
     gap: 14px;
 
+    width: 100%;
+
     .title {
       font-size: typography.$font-size-largest;
       font-weight: typography.$font-weight-bold;
@@ -43,11 +45,42 @@
       font-weight: typography.$font-weight-normal;
     }
 
-    .updatedAt {
+    .updatedAt,
+    .author {
       font-size: typography.$font-size-default;
       font-weight: typography.$font-weight-normal;
 
+      &:not(:last-child) {
+        &::after {
+          content: "•";
+          padding: 0 4px;
+        }
+      }
+    }
+    .updatedAt {
       color: colors.$font-color-light;
+    }
+
+    .tagCardList {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+
+      .tagChip {
+        padding: 8px 12px;
+
+        border-radius: 8px;
+        text-align: center;
+
+        opacity: 0.8;
+
+        color: colors.$white-pure;
+      }
+    }
+
+    .cardRow {
+      display: flex;
+      align-items: center;
     }
 
     @media (max-width: breakpoint.$mobile) {

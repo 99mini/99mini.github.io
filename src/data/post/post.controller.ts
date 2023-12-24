@@ -73,6 +73,10 @@ class PostController {
       .catch((err) => console.error(err));
     return res;
   };
+
+  public getUser = async () => {
+    return await this.postService.getUsers();
+  };
 }
 
 export default PostController;

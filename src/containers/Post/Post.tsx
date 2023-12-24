@@ -14,8 +14,17 @@ const PostContainer = ({ data }: { data: PostEntity[] }) => {
             <div className="postCardContent">
               <span className="title">{postItem.title}</span>
               <span className="abstract">{postItem.abstract}</span>
-              <span className="updatedAt">{moment(postItem.updatedAt).format("YYYY-MM-DD")}</span>
-              <span className="author">{postItem.author}</span>
+              <div className="cardRow">
+                <span className="updatedAt">{moment(postItem.updatedAt).format("YYYY-MM-DD")}</span>
+                <span className="author">{postItem.author}</span>
+              </div>
+              <ul className="tagCardList">
+                {postItem.tags.map((tag) => (
+                  <li key={tag.id} className="tagChip" style={{ backgroundColor: tag.color }}>
+                    {tag.name}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Link>

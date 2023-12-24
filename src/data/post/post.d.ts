@@ -3,6 +3,7 @@ type PostEntity = {
   createdAt: string;
   updatedAt: string;
   author: string;
+  authorAvatar: string | null;
   abstract: string;
   title: string;
   thumbnail: string;
@@ -11,4 +12,11 @@ type PostEntity = {
     name: string;
     color: string;
   }[];
+};
+
+type UserEntity = {
+  [key in string]: {
+    name: string;
+    avatarUrl: string | null;
+  };
 };
