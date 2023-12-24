@@ -13,15 +13,19 @@
   @media (max-width: breakpoint.$mobile) {
     flex-direction: column;
     gap: 20px;
-    .thumbnail {
-      width: auto;
-      height: 200px;
-    }
   }
 
   &:hover {
     .title {
       color: colors.$primary-color;
+    }
+  }
+
+  .thumbnail {
+    border-radius: 0.75rem;
+    @media (max-width: breakpoint.$mobile) {
+      width: auto;
+      height: 200px;
     }
   }
 
@@ -37,7 +41,9 @@
       font-size: typography.$font-size-largest;
       font-weight: typography.$font-weight-bold;
 
-      @include animations.hover-transition-color;
+      @include animations.hover-transition;
+
+      margin-bottom: 14px;
     }
 
     .abstract {
@@ -45,20 +51,22 @@
       font-weight: typography.$font-weight-normal;
     }
 
-    .updatedAt,
-    .author {
-      font-size: typography.$font-size-default;
-      font-weight: typography.$font-weight-normal;
+    .cardInfo {
+      display: flex;
+      align-items: center;
 
-      &:not(:last-child) {
-        &::after {
-          content: "•";
-          padding: 0 4px;
+      span {
+        font-size: typography.$font-size-default;
+        font-weight: typography.$font-weight-normal;
+        color: colors.$font-color-light;
+
+        &:not(:last-child) {
+          &::after {
+            content: "•";
+            padding: 0 4px;
+          }
         }
       }
-    }
-    .updatedAt {
-      color: colors.$font-color-light;
     }
 
     .tagCardList {
@@ -75,12 +83,15 @@
         opacity: 0.8;
 
         color: colors.$white-pure;
-      }
-    }
 
-    .cardRow {
-      display: flex;
-      align-items: center;
+        @include animations.hover-transition;
+
+        cursor: pointer;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
 
     @media (max-width: breakpoint.$mobile) {

@@ -77,7 +77,7 @@ class PostService {
           updatedAt: filteredItem.last_edited_time,
           author: allUsers[filteredItem.created_by.id]?.name,
           authorAvatar: allUsers[filteredItem.created_by.id]?.avatarUrl,
-          thumbnail: filteredItem.cover || "",
+          thumbnail: filteredItem.cover?.external?.url || filteredItem.cover?.file?.url || "",
           abstract: filteredItem.properties.abstract.rich_text[0]?.plain_text,
           title: filteredItem.properties.title.title[0]?.plain_text,
           tags: filteredItem.properties.tags.multi_select,
