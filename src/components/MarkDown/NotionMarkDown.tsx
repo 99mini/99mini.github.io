@@ -67,6 +67,13 @@ const NotionMarkDown = ({ post }: { post: string }) => {
             }
             return <code className="inline">{children}</code>;
           },
+          img: ({ src, alt }) => (
+            <div className="mdImageWrapper">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="mdImage" src={src} alt={alt} />
+              <span className="mdImageCaption">{alt}</span>
+            </div>
+          ),
         }}
       >
         {`${post}`}

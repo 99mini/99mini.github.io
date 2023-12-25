@@ -4,6 +4,8 @@
 .notionMarkDownCard {
   @include card.card;
 
+  font-family: "Pretendard";
+
   p,
   a,
   table,
@@ -35,6 +37,23 @@
     }
   }
 
+  .mdImageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    .mdImage {
+      object-fit: cover;
+    }
+    .mdImageCaption {
+      color: rgb(128, 128, 128);
+      font-size: 1rem;
+    }
+  }
+
   .codeBlock {
     position: relative;
 
@@ -51,7 +70,6 @@
       .clipboardHelpText {
         opacity: 0;
 
-        font-family: "Pretendard";
         margin-right: 8px;
         color: rgb(128, 128, 128);
         font-size: 1rem;

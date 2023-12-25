@@ -8,6 +8,7 @@
   @include card.card;
 
   display: flex;
+  align-items: center;
   gap: 48px;
 
   @media (max-width: breakpoint.$mobile) {
