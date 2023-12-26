@@ -1,0 +1,33 @@
+@use "/src/sass/base/colors";
+
+html {
+  scroll-behavior: smooth;
+}
+
+.hashAnchor {
+  color: colors.$font-color-bold;
+
+  &[href^="#"]::before {
+    content: "#";
+    color: colors.$font-color-light;
+    text-decoration-line: none;
+    display: inline-block;
+    font-size: 0.7em;
+    line-height: 1;
+    margin-left: -0.8em;
+    text-decoration: none;
+    width: 0.8em;
+    visibility: hidden;
+  }
+  &:hover {
+    // display: inline-flex;
+    // align-items: center;
+
+    text-underline-offset: 0.2rem;
+    text-decoration-line: underline;
+
+    &[href^="#"]::before {
+      visibility: visible;
+    }
+  }
+}
