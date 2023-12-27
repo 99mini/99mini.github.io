@@ -20,3 +20,9 @@ type UserEntity = {
     avatarUrl: string | null;
   };
 };
+
+type NotionHeadingEl = {
+  headingNumber: number;
+  id: string;
+  text: string;
+};

@@ -1,4 +1,4 @@
-import PostDetailContainer from "@/src/containers/Post/Detail";
+import { PostDetailContainer } from "@/src/containers/Post/Detail";
 import { Post } from "@/src/data/post";
 
 export const generateStaticParams = async () => {
