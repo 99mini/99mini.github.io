@@ -15,7 +15,7 @@ const HeadingEl = ({ children, tag }: { children: React.ReactNode & React.ReactN
     return (
       <h1 id={hrefId}>
         <Link className="hashAnchor" href={`#${hrefId}`}>
-          {children}{" "}
+          {children}
         </Link>
       </h1>
     );
@@ -24,7 +24,7 @@ const HeadingEl = ({ children, tag }: { children: React.ReactNode & React.ReactN
     return (
       <h2 id={hrefId}>
         <Link className="hashAnchor" href={`#${hrefId}`}>
-          {children}{" "}
+          {children}
         </Link>
       </h2>
     );
@@ -33,7 +33,7 @@ const HeadingEl = ({ children, tag }: { children: React.ReactNode & React.ReactN
     return (
       <h3 id={hrefId}>
         <Link className="hashAnchor" href={`#${hrefId}`}>
-          {children}{" "}
+          {children}
         </Link>
       </h3>
     );
