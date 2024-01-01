@@ -16,7 +16,6 @@ const AsideHashTagItem = ({ item, style = {} }: { item: NotionHeadingEl; style?:
   );
 };
 
-// TODO 이전 인덱스를 반영하여 들여쓰기 하기
 const AsideNav = ({ anchorHeadingList }: { anchorHeadingList: NotionHeadingEl[] }) => {
   const minHeadingNumber = anchorHeadingList.reduce((a, b) => Math.min(a, b.headingNumber), 4);
 
