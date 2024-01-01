@@ -1,0 +1,54 @@
+@use "/src/sass/base/colors";
+@use "/src/sass/base/typography";
+@use "/src/sass/base/animations";
+@use "/src/sass/layout/breakpoint";
+
+.asideWrapper {
+  position: relative;
+  margin-top: 2rem;
+
+  @media (max-width: breakpoint.$pc) {
+    display: none;
+  }
+  .asideAbsolute {
+    position: absolute;
+    left: 100%;
+
+    .anchorIndexAside {
+      position: fixed;
+      top: calc(72 + 32) px;
+
+      margin-left: 4rem;
+      @media (max-width: 1440px) {
+        margin-left: 3rem;
+      }
+
+      .anchorTagList {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        padding: 4px 12px;
+
+        border-left: 2px solid colors.$border-color-white-light;
+        .anchorTagItem {
+          color: colors.$font-color-light;
+
+          @include animations.hover-transition;
+          &[aria-current="true"] {
+            color: colors.$font-color-normal;
+            font-weight: typography.$font-weight-bold;
+            transform: scale(1.05);
+          }
+          :hover {
+            color: colors.$font-color-normal;
+            font-weight: typography.$font-weight-bold;
+
+            text-decoration-line: underline;
+            text-underline-offset: 0.2rem;
+          }
+        }
+      }
+    }
+  }
+}

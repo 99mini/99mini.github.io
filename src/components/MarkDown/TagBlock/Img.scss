@@ -1,0 +1,17 @@
+.mdImageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  .mdImage {
+    object-fit: cover;
+    width: 100%;
+  }
+  .mdImageCaption {
+    color: rgb(128, 128, 128);
+    font-size: 1rem;
+  }
+}
