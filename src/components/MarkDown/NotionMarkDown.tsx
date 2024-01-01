@@ -6,9 +6,9 @@ import { Code, HeadingEl, Img } from "./TagBlock";
 import "./NotionMarkDown.scss";
 import Link from "next/link";
 
-const NotionMarkDown = ({ post }: { post: string }) => {
+const NotionMarkDown = ({ post, id }: { post: string; id: string }) => {
   return (
-    <div className="notionMarkDownCard">
+    <div className="notionMarkDownCard" id={id}>
       <Markdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}

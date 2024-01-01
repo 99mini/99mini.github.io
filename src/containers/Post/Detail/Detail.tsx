@@ -2,7 +2,7 @@ import { PageTitle } from "@/src/components";
 import { NotionMarkDown } from "@/src/components/MarkDown";
 import AsideNav from "./AsideNav";
 
-function PostDetailContainer({ rawMD, title }: { rawMD: string; title: string }) {
+function PostDetailContainer({ rawMD, title, postId }: { rawMD: string; title: string; postId: string }) {
   const headingTagRegex = /^(#+)\s([\S+| ]+)/gm;
   const anchorHeadingList: NotionHeadingEl[] = Array.from(rawMD.matchAll(headingTagRegex))
     .map((item) => {
@@ -24,7 +24,7 @@ function PostDetailContainer({ rawMD, title }: { rawMD: string; title: string })
     <div>
       <AsideNav anchorHeadingList={anchorHeadingList} />
       <PageTitle>{title}</PageTitle>
-      <NotionMarkDown post={rawMD} />
+      <NotionMarkDown post={rawMD} id={postId} />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { Header, Footer, SideNavbar } from "../containers";
 import "./globals.css";
 import "./layout.scss";
 import Head from "next/head";
+import RootProvider from "../provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,12 +41,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <HeadMeta />
+
       <body className={inter.className}>
-        <Header />
-        <main className="wrapContainer">{children}</main>
-        <Footer />
-        <SideNavbar />
-        <div id="portal" />
+        <RootProvider>
+          <Header />
+          <main className="wrapContainer">{children}</main>
+          <Footer />
+          <SideNavbar />
+          <div id="portal" />
+        </RootProvider>
       </body>
     </html>
   );

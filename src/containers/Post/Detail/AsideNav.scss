@@ -1,5 +1,6 @@
 @use "/src/sass/base/colors";
 @use "/src/sass/base/typography";
+@use "/src/sass/base/animations";
 @use "/src/sass/layout/breakpoint";
 
 .asideWrapper {
@@ -32,6 +33,13 @@
         border-left: 2px solid colors.$border-color-white-light;
         .anchorTagItem {
           color: colors.$font-color-light;
+
+          @include animations.hover-transition;
+          &[aria-current="true"] {
+            color: colors.$font-color-normal;
+            font-weight: typography.$font-weight-bold;
+            transform: scale(1.05);
+          }
           :hover {
             color: colors.$font-color-normal;
             font-weight: typography.$font-weight-bold;

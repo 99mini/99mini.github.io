@@ -14,7 +14,7 @@ const PostPage = async ({ params }: { params: { pageId: string } }) => {
   const rawMD = await post.getPostPage(params.pageId);
   const titleRes = await post.getPostPageProperty(params.pageId, "title");
   const title = titleRes.results[0]?.title.plain_text || "";
-  return <PostDetailContainer rawMD={rawMD} title={title} />;
+  return <PostDetailContainer rawMD={rawMD} title={title} postId={params.pageId} />;
 };
 
 export default PostPage;
