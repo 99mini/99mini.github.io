@@ -18,6 +18,7 @@ class PostService {
     "Notion-Version": "2022-06-28",
     "content-type": "application/json",
   };
+  private isDev = process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test";
 
   private users: UserEntity = {};
   constructor() {
@@ -68,21 +69,22 @@ class PostService {
     }
 
     const allUsers = await this.getUsers();
-    const res: PostEntity[] = data
-      .filter((postItem) => postItem.properties.visibility?.status?.name === "public")
-      .map((filteredItem) => {
-        return {
-          id: filteredItem.id,
-          createdAt: filteredItem.created_time,
-          updatedAt: filteredItem.last_edited_time,
-          author: allUsers[filteredItem.created_by.id]?.name,
-          authorAvatar: allUsers[filteredItem.created_by.id]?.avatarUrl,
-          thumbnail: filteredItem.cover?.external?.url || filteredItem.cover?.file?.url || "",
-          abstract: filteredItem.properties.abstract.rich_text[0]?.plain_text,
-          title: filteredItem.properties.title.title[0]?.plain_text,
-          tags: filteredItem.properties.tags.multi_select,
-        };
-      });
+    let filteredres = data;
+    if (!this.isDev) filteredres = data.filter((postItem) => postItem.properties.visibility?.status?.name === "public");
+
+    const res: PostEntity[] = filteredres.map((filteredItem) => {
+      return {
+        id: filteredItem.id,
+        createdAt: filteredItem.created_time,
+        updatedAt: filteredItem.last_edited_time,
+        author: allUsers[filteredItem.created_by.id]?.name,
+        authorAvatar: allUsers[filteredItem.created_by.id]?.avatarUrl,
+        thumbnail: filteredItem.cover?.external?.url || filteredItem.cover?.file?.url || "",
+        abstract: filteredItem.properties.abstract.rich_text[0]?.plain_text,
+        title: filteredItem.properties.title.title[0]?.plain_text,
+        tags: filteredItem.properties.tags.multi_select,
+      };
+    });
     return res;
   };
 
