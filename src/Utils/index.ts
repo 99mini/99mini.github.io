@@ -10,7 +10,11 @@ export const createQueryString = (searchParams: ReadonlyURLSearchParams, data: {
   return params.toString();
 };
 
-export const concatClassName = (className: string, givenClassName: string = "") => className.concat(givenClassName).trim();
+export const concatClassName = (...classNames: (string | undefined)[]) =>
+  classNames
+    .filter((className) => className)
+    .join(" ")
+    .trim();
 
 /**
  *

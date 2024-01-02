@@ -1,0 +1,141 @@
+@use "/src/sass/base/colors";
+@use "/src/sass/base/typography";
+@use "/src/sass/base/animations";
+@use "/src/sass/components/card";
+@use "/src/sass/layout/breakpoint";
+
+.postCard {
+  @include card.card;
+
+  display: flex;
+  gap: 48px;
+
+  @media (max-width: breakpoint.$mobile) {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .detailAnchor {
+    &:hover {
+      .title {
+        color: colors.$primary-color;
+      }
+    }
+  }
+
+  .thumbnailAnchor {
+    border-radius: 0.75rem;
+    width: 240px;
+    height: 240px;
+
+    @media (max-width: breakpoint.$mobile) {
+      width: auto;
+      height: 200px;
+    }
+
+    .thumbnail {
+      border-radius: inherit;
+      object-fit: cover;
+
+      @media (max-width: breakpoint.$mobile) {
+        width: 100%;
+        height: 200px;
+      }
+    }
+
+    &:hover {
+      & ~ .postCardContent .title {
+        color: colors.$primary-color;
+      }
+    }
+  }
+
+  .postCardContent {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    width: 100%;
+
+    .title {
+      font-size: typography.$font-size-largest;
+      font-weight: typography.$font-weight-bold;
+
+      @include animations.hover-transition;
+
+      margin-bottom: 14px;
+    }
+
+    .abstract {
+      display: -webkit-box;
+      word-wrap: break-word;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      font-size: typography.$font-size-lg;
+      font-weight: typography.$font-weight-normal;
+    }
+
+    .cardInfo {
+      display: flex;
+      align-items: center;
+
+      span {
+        font-size: typography.$font-size-default;
+        font-weight: typography.$font-weight-normal;
+        color: colors.$font-color-light;
+
+        &:not(:last-child) {
+          &::after {
+            content: "•";
+            padding: 0 4px;
+          }
+        }
+      }
+    }
+
+    .tagCardList {
+      display: grid;
+      gap: 8px;
+
+      grid-template-columns: repeat(auto-fit, 144px);
+
+      margin-top: auto;
+      .tagChip {
+        padding: 8px 12px;
+
+        border-radius: 8px;
+        text-align: center;
+
+        opacity: 0.8;
+
+        color: colors.$white-pure;
+
+        @include animations.hover-transition;
+
+        cursor: pointer;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    @media (max-width: breakpoint.$mobile) {
+      .title {
+        font-size: typography.$font-size-2xl;
+      }
+
+      .abstract {
+        font-size: typography.$font-size-default;
+      }
+
+      .updatedAt {
+        font-size: typography.$font-size-md;
+      }
+    }
+  }
+}

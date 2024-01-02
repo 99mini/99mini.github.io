@@ -37,7 +37,7 @@
 
   color: colors.$font-color-normal;
 
-  @include animations.hover-transition-color;
+  @include animations.hover-transition;
 
   &.dropShadow {
     backdrop-filter: blur(8px);
