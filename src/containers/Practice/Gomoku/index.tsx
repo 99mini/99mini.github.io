@@ -403,11 +403,15 @@ const GomokuContainer = () => {
     if (!stringifyGameInfo) {
       return;
     }
-    const savedGameInfo: GameInfoType = decodeBase64(stringifyGameInfo);
-
     router.replace(pathname + "?" + createQueryString(searchParams, { key: "game", value: stringifyGameInfo }));
 
-    gameIdRef.current = savedGameInfo.id || randomString16();
+    const savedGameInfo: GameInfoType | null = decodeBase64(stringifyGameInfo);
+
+    gameIdRef.current = savedGameInfo?.id || randomString16();
+
+    if (!savedGameInfo) {
+      return;
+    }
 
     setGameInfo(savedGameInfo);
     setWinner(savedGameInfo.status);
