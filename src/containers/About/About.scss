@@ -20,6 +20,14 @@
     }
 
     .markDownContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      em {
+        color: colors.$font-color-light;
+      }
+
       ul,
       li {
         list-style-type: disc;
