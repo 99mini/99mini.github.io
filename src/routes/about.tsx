@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
+import { SEO } from "@/components/SEO";
 
 export const Route = createFileRoute("/about")({
   component: AboutPage,
@@ -26,6 +27,7 @@ const PROJECTS = [
 export default function AboutPage() {
   return (
     <div className="flex flex-col gap-12">
+      <SEO title="About" description="99mini 소개, 경력, 프로젝트 정보" path="/about" />
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

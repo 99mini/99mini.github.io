@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PostCard } from "@/components/PostCard";
 import { getAllPosts } from "@/lib/posts";
+import { SEO } from "@/components/SEO";
 
 export const Route = createFileRoute("/post/")({
   loader: () => ({ posts: getAllPosts() }),
@@ -12,6 +13,7 @@ function PostListPage() {
 
   return (
     <div className="flex flex-col gap-8">
+      <SEO title="Blog" description="99mini의 개발 블로그 — 기술 글 모음" path="/post" />
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold text-[var(--color-text)]">Blog</h1>
         <p className="text-[var(--color-muted)]">총 {posts.length}개의 포스트</p>

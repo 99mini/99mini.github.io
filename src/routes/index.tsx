@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { Link } from "@tanstack/react-router";
+import { SEO } from "@/components/SEO";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -9,6 +9,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return (
     <div className="flex flex-col gap-16">
+      <SEO description="프론트엔드 개발자 99mini의 포트폴리오 & 블로그" path="/" />
       {/* Hero */}
       <section className="flex flex-col gap-6 pt-8">
         <motion.div

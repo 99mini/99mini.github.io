@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
+import { SEO } from "@/components/SEO";
 
 export const Route = createFileRoute("/practice/")({
   component: PracticeIndexPage,
@@ -17,6 +18,7 @@ const ITEMS = [
 function PracticeIndexPage() {
   return (
     <div className="flex flex-col gap-8">
+      <SEO title="Practice" description="인터랙티브 실험 & 미니 게임 모음" path="/practice" />
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold text-[var(--color-text)]">Practice</h1>
         <p className="text-[var(--color-muted)]">인터랙티브 실험 & 미니 게임</p>

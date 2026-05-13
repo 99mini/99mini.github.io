@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import releases from "virtual:releases";
+import { SEO } from "@/components/SEO";
 
 export const Route = createFileRoute("/release")({
   loader: () => ({ releases }),
@@ -12,6 +13,7 @@ function ReleasePage() {
 
   return (
     <div className="flex flex-col gap-8">
+      <SEO title="Release" description="99mini GitHub 릴리즈 히스토리" path="/release" />
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold text-[var(--color-text)]">Release</h1>
         <p className="text-[var(--color-muted)]">GitHub 릴리즈 히스토리</p>

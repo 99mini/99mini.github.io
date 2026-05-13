@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { getPostBySlug } from "@/lib/posts";
+import { SEO } from "@/components/SEO";
 
 export const Route = createFileRoute("/post/$slug")({
   loader: ({ params }) => {
@@ -22,6 +23,7 @@ function PostDetailPage() {
 
   return (
     <article className="flex flex-col gap-8">
+      <SEO title={post.title} description={post.summary} path={`/post/${post.slug}`} />
       <motion.header
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -46,7 +48,7 @@ function PostDetailPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="prose prose-invert max-w-none"
+        className="prose dark:prose-invert max-w-none prose-a:text-[var(--color-accent)] prose-a:no-underline hover:prose-a:underline prose-code:before:content-none prose-code:after:content-none prose-code:rounded prose-code:bg-[var(--color-surface)] prose-code:px-1.5 prose-code:py-0.5 prose-code:font-normal"
         dangerouslySetInnerHTML={{ __html: post.html }}
       />
     </article>
