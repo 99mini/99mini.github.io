@@ -1,7 +1,18 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark *));
+
 @layer base {
   :root {
+    --color-bg: #ffffff;
+    --color-surface: #f5f5f5;
+    --color-border: #e5e5e5;
+    --color-text: #171717;
+    --color-muted: #737373;
+    --color-accent: #16a34a;
+  }
+
+  :root.dark {
     --color-bg: #0a0a0a;
     --color-surface: #111111;
     --color-border: #222222;
@@ -23,6 +34,7 @@
     color: var(--color-text);
     font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   a {
