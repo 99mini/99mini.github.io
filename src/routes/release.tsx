@@ -1,17 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import type { GithubPR } from "@/types";
+import releases from "virtual:releases";
 
 export const Route = createFileRoute("/release")({
-  loader: async () => {
-    const { getReleases } = await import("@/lib/github");
-    return { releases: await getReleases() };
-  },
+  loader: () => ({ releases }),
   component: ReleasePage,
 });
 
 function ReleasePage() {
-  const { releases } = Route.useLoaderData() as { releases: GithubPR[] };
+  const { releases } = Route.useLoaderData();
 
   return (
     <div className="flex flex-col gap-8">

@@ -1,16 +1,4 @@
-import { z } from "zod";
-import { GithubPRSchema } from "@/types";
-
-const REPO = "99mini/99mini.github.io";
-
-export async function getReleases() {
-  const url = `https://api.github.com/repos/${REPO}/pulls?state=closed&per_page=50`;
-  const res = await fetch(url, {
-    headers: { Accept: "application/vnd.github+json" },
-  });
-
-  if (!res.ok) return [];
-
-  const data = await res.json();
-  return z.array(GithubPRSchema).parse(data).filter((pr) => pr.merged_at !== null);
-}
+// GitHub releases data is fetched at build time by the githubReleasesPlugin in vite.config.ts
+// and exposed as the virtual module "virtual:releases".
+// This file is kept as documentation of the data source.
+export {};
