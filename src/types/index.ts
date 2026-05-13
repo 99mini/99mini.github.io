@@ -13,7 +13,7 @@ export type PostFrontmatter = z.infer<typeof PostFrontmatterSchema>;
 
 export type Post = PostFrontmatter & {
   slug: string;
-  content: string;
+  html: string;
 };
 
 export const GithubPRSchema = z.object({

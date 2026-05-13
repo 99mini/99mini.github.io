@@ -1,14 +1,12 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import type { Post } from "@/types";
+import { getPostBySlug } from "@/lib/posts";
 
 export const Route = createFileRoute("/post/$slug")({
-  loader: async ({ params }) => {
-    const { getPostBySlug, renderMarkdown } = await import("@/lib/posts");
+  loader: ({ params }) => {
     const post = getPostBySlug(params.slug);
     if (!post) throw notFound();
-    const html = await renderMarkdown(post.content);
-    return { post, html };
+    return { post };
   },
   component: PostDetailPage,
   notFoundComponent: () => (
@@ -20,7 +18,7 @@ export const Route = createFileRoute("/post/$slug")({
 });
 
 function PostDetailPage() {
-  const { post, html } = Route.useLoaderData() as { post: Post; html: string };
+  const { post } = Route.useLoaderData();
 
   return (
     <article className="flex flex-col gap-8">
@@ -49,7 +47,7 @@ function PostDetailPage() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
         className="prose prose-invert max-w-none"
-        dangerouslySetInnerHTML={{ __html: html }}
+        dangerouslySetInnerHTML={{ __html: post.html }}
       />
     </article>
   );

@@ -1,17 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PostCard } from "@/components/PostCard";
-import type { Post } from "@/types";
+import { getAllPosts } from "@/lib/posts";
 
 export const Route = createFileRoute("/post/")({
-  loader: async () => {
-    const { getAllPosts } = await import("@/lib/posts");
-    return { posts: getAllPosts() };
-  },
+  loader: () => ({ posts: getAllPosts() }),
   component: PostListPage,
 });
 
 function PostListPage() {
-  const { posts } = Route.useLoaderData() as { posts: Post[] };
+  const { posts } = Route.useLoaderData();
 
   return (
     <div className="flex flex-col gap-8">
