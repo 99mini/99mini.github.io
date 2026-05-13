@@ -29,7 +29,11 @@ function githubReleasesPlugin(): Plugin {
         const releases = z
           .array(GithubPRSchema)
           .parse(raw)
-          .filter((pr) => pr.merged_at !== null);
+          .filter(
+            (pr) =>
+              pr.merged_at !== null &&
+              (pr.labels.length > 0 || pr.title.toLowerCase().startsWith("release:")),
+          );
         cache = `export default ${JSON.stringify(releases)}`;
       } catch {
         cache = "export default []";

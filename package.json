@@ -1,14 +1,14 @@
 {
   "name": "99mini.github.io",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.build.json && vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
-    "biome": "biome check src/",
-    "biome:fix": "biome check --write src/"
+    "lint": "biome check src/",
+    "lint:fix": "biome check --write src/"
   },
   "packageManager": "pnpm@10.28.2",
   "dependencies": {

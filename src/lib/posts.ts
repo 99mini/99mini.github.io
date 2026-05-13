@@ -18,7 +18,7 @@ const rawFiles = import.meta.glob("/content/posts/*.md", {
 function parsePost(filepath: string, raw: string): Post {
   const slug = filepath.replace(/^.*\/(.+)\.md$/, "$1");
   const { data, content } = matter(raw);
-  const frontmatter = PostFrontmatterSchema.parse(data) as PostFrontmatter;
+  const frontmatter = PostFrontmatterSchema.parse(data);
   return { ...frontmatter, slug, content };
 }
 

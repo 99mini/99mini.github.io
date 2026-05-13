@@ -18,7 +18,9 @@ function ReleasePage() {
       </div>
 
       {releases.length === 0 ? (
-        <p className="text-[var(--color-muted)]">릴리즈 정보를 불러올 수 없습니다.</p>
+        <p className="text-[var(--color-muted)]">
+          릴리즈 정보를 불러올 수 없습니다.
+        </p>
       ) : (
         <ol className="relative border-l border-[var(--color-border)]">
           {releases.map((pr, i) => (
@@ -36,7 +38,9 @@ function ReleasePage() {
                     #{pr.number}
                   </span>
                   <time className="text-xs text-[var(--color-muted)]">
-                    {pr.merged_at ? new Date(pr.merged_at).toLocaleDateString("ko-KR") : ""}
+                    {pr.merged_at
+                      ? new Date(pr.merged_at).toLocaleDateString("ko-KR")
+                      : ""}
                   </time>
                 </div>
                 <a
