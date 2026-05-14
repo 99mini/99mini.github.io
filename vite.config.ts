@@ -81,6 +81,9 @@ async function buildPostsModule(): Promise<string> {
       const slug = filename.replace(/\.md$/, "");
       const raw = readFileSync(resolve(POSTS_DIR, filename), "utf-8");
       const { data, content } = matter(raw);
+      if (data.date instanceof Date) {
+        data.date = data.date.toISOString().slice(0, 10);
+      }
       const frontmatter = PostFrontmatterSchema.parse(data);
       const html = String(await processor.process(content));
       return { ...frontmatter, slug, html };
