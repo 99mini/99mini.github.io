@@ -8,56 +8,158 @@ export const Route = createFileRoute("/about")({
 
 const EXPERIENCES = [
   {
-    period: "2023 - 현재",
-    role: "프론트엔드 개발자",
-    company: "개인 프로젝트 / 오픈소스",
-    description: "React, TypeScript 기반 웹 애플리케이션 개발",
+    company: "Toss Bank",
+    role: "Frontend Developer",
+    period: "26.01.19 ~ Present",
+    tags: ["react", "nextjs16", "pandacss", "react-query"],
+    description: null,
+  },
+  {
+    company: "알렌의서재 (리비바이오)",
+    role: "Frontend Engineer — 메이퓨어팀",
+    period: "25.08.18 ~ 26.01.13",
+    tags: ["react", "typescript", "next.js", "i18next", "emotion", "antd"],
+    description: "Improving Medical Website SEO and Internationalization (i18n)",
+  },
+  {
+    company: "오늘의웹툰 (Webtoon today)",
+    companyUrl: "https://webtoon.today/",
+    role: "Software Engineer — 성장팀",
+    period: "24.02.06 ~ 24.09.03",
+    tags: ["react", "typescript", "sass(scss)", "recoil", "storybook", "rollup"],
+    description: "Webtoon Metric Development: Webtoon specific marketing solution (B2B SaaS)",
+  },
+  {
+    company: "오늘의웹툰 (Webtoontoday) — ICT 인턴",
+    role: "Frontend Engineer Intern — 성장팀",
+    period: "23.09.01 ~ 23.12.31",
+    tags: ["react", "typescript", "sass(scss)", "recoil", "MUI"],
+    description: null,
   },
 ];
 
 const PROJECTS = [
   {
-    name: "99mini.github.io",
-    description: "개인 블로그 & 포트폴리오 사이트",
-    tags: ["React", "TanStack Router", "TailwindCSS"],
-    url: "https://99mini.github.io",
+    name: "24-2 Capstone Design",
+    period: "24.09 ~ 12.20, 25.01 ~ 25.08",
+    status: "Maintenance suspended",
+    description: "Platform application for selling side dish store inventory",
+    note: "Capstone Design Excellence Award (25.01.03)",
+    tags: ["react-native", "typescript", "emotion", "react-query", "zustand", "react"],
+    githubUrl: "https://github.com/ummgoban",
+    siteUrl: "https://ummgoban.github.io/",
   },
+  {
+    name: "Judo Club Homepage",
+    period: "22.12 ~ 23.02",
+    status: "In active development",
+    description: "Webpage of the Judo Club (Jiho) — SSR using Express and React",
+    note: null,
+    tags: ["react", "typescript", "vite", "tailwindcss", "express"],
+    githubUrl: "https://github.com/uos-judo-jiho",
+    siteUrl: "https://uosjudo.com/",
+  },
+];
+
+const OPEN_SOURCE = [
+  {
+    repo: "toss/es-hangul",
+    url: "https://github.com/toss/es-hangul",
+    contributions: [
+      { id: "#60", url: "https://github.com/toss/es-hangul/issues/60" },
+      { id: "#68", url: "https://github.com/toss/es-hangul/pull/68" },
+    ],
+  },
+  {
+    repo: "modern-agile-team/modern-kit",
+    url: "https://github.com/modern-agile-team/modern-kit",
+    contributions: [
+      { id: "#510", url: "https://github.com/modern-agile-team/modern-kit/pull/510" },
+      { id: "#521", url: "https://github.com/modern-agile-team/modern-kit/pull/521" },
+    ],
+  },
+];
+
+const WAKA_STATS = [
+  { lang: "TypeScript", hrs: "602 hrs 39 mins", pct: 56.59 },
+  { lang: "Python", hrs: "81 hrs 22 mins", pct: 7.64 },
+  { lang: "JavaScript", hrs: "72 hrs 5 mins", pct: 6.77 },
+  { lang: "Markdown", hrs: "68 hrs 10 mins", pct: 6.40 },
+  { lang: "JSON", hrs: "62 hrs 29 mins", pct: 5.87 },
+  { lang: "YAML", hrs: "32 hrs 59 mins", pct: 3.10 },
+  { lang: "Bash", hrs: "25 hrs 1 min", pct: 2.35 },
 ];
 
 export default function AboutPage() {
   return (
     <div className="flex flex-col gap-12">
       <SEO title="About" description="99mini 소개, 경력, 프로젝트 정보" path="/about" />
+
+      {/* Intro */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-3"
       >
-        <h1 className="text-3xl font-bold text-[var(--color-text)]">About</h1>
-        <p className="max-w-2xl text-[var(--color-muted)] leading-relaxed">
-          웹 프론트엔드 개발자입니다. 사용자 친화적인 인터페이스와 성능 최적화에 관심이 많으며,
-          오픈소스 기여와 개인 프로젝트를 통해 지속적으로 성장하고 있습니다.
+        <h1 className="text-3xl font-bold text-[var(--color-text)]">Young Min Kim</h1>
+        <p className="text-lg text-[var(--color-accent)] font-medium">99mini</p>
+        <p className="text-[var(--color-muted)] leading-relaxed">
+          Frontend Engineer. Interested in Functional Programming.
         </p>
+        <div className="flex flex-wrap gap-1.5 mt-1">
+          {["javascript", "typescript", "react", "python"].map((tech) => (
+            <code
+              key={tech}
+              className="rounded bg-[var(--color-surface)] border border-[var(--color-border)] px-2 py-0.5 text-xs text-[var(--color-muted)]"
+            >
+              {tech}
+            </code>
+          ))}
+        </div>
       </motion.section>
 
+      {/* Work Experience */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">경력</h2>
-        <div className="flex flex-col gap-4">
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">Work Experience</h2>
+        <div className="flex flex-col gap-3">
           {EXPERIENCES.map((exp) => (
             <div
-              key={exp.company}
+              key={exp.company + exp.period}
               className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="font-semibold text-[var(--color-text)]">{exp.role}</h3>
-                  <p className="text-sm text-[var(--color-accent)]">{exp.company}</p>
-                  <p className="mt-2 text-sm text-[var(--color-muted)]">{exp.description}</p>
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                <div className="flex flex-col gap-0.5">
+                  {"companyUrl" in exp && exp.companyUrl ? (
+                    <a
+                      href={exp.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
+                    >
+                      {exp.company} ↗
+                    </a>
+                  ) : (
+                    <p className="font-semibold text-[var(--color-text)]">{exp.company}</p>
+                  )}
+                  <p className="text-sm text-[var(--color-accent)]">{exp.role}</p>
+                  {exp.description && (
+                    <p className="mt-1 text-sm text-[var(--color-muted)]">{exp.description}</p>
+                  )}
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {exp.tags.map((tag) => (
+                      <code
+                        key={tag}
+                        className="rounded bg-[var(--color-accent)]/10 px-1.5 py-0.5 text-[11px] text-[var(--color-accent)]"
+                      >
+                        {tag}
+                      </code>
+                    ))}
+                  </div>
                 </div>
                 <span className="shrink-0 text-xs text-[var(--color-muted)]">{exp.period}</span>
               </div>
@@ -66,37 +168,150 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
+      {/* Projects */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">프로젝트</h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">Projects</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {PROJECTS.map((proj) => (
-            <a
+            <div
               key={proj.name}
-              href={proj.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition-colors hover:border-[var(--color-accent)]/40"
+              className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex flex-col gap-3"
             >
-              <h3 className="font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
-                {proj.name}
-              </h3>
-              <p className="mt-1 text-sm text-[var(--color-muted)]">{proj.description}</p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <h3 className="font-semibold text-[var(--color-text)]">{proj.name}</h3>
+                  <p className="text-xs text-[var(--color-muted)] mt-0.5">
+                    {proj.period}
+                    {proj.status && (
+                      <span className="ml-1.5 italic">· {proj.status}</span>
+                    )}
+                  </p>
+                </div>
+                <div className="flex gap-2 shrink-0">
+                  <a
+                    href={proj.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors"
+                  >
+                    GitHub ↗
+                  </a>
+                  <a
+                    href={proj.siteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors"
+                  >
+                    Site ↗
+                  </a>
+                </div>
+              </div>
+              <p className="text-sm text-[var(--color-muted)]">{proj.description}</p>
+              {proj.note && (
+                <p className="text-xs text-[var(--color-accent)]">🏆 {proj.note}</p>
+              )}
+              <div className="flex flex-wrap gap-1 mt-auto">
                 {proj.tags.map((tag) => (
-                  <span
+                  <code
                     key={tag}
-                    className="rounded-md bg-[var(--color-accent)]/10 px-2 py-0.5 text-xs text-[var(--color-accent)]"
+                    className="rounded bg-[var(--color-accent)]/10 px-1.5 py-0.5 text-[11px] text-[var(--color-accent)]"
                   >
                     {tag}
-                  </span>
+                  </code>
                 ))}
               </div>
-            </a>
+            </div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Open Source */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="flex flex-col gap-4"
+      >
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">Open Source</h2>
+        <div className="flex flex-col gap-3">
+          {OPEN_SOURCE.map((item) => (
+            <div
+              key={item.repo}
+              className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4"
+            >
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
+              >
+                {item.repo} ↗
+              </a>
+              <div className="flex gap-2 ml-auto">
+                {item.contributions.map((c) => (
+                  <a
+                    key={c.id}
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded bg-[var(--color-accent)]/10 px-2 py-0.5 text-xs text-[var(--color-accent)] hover:bg-[var(--color-accent)]/20 transition-colors"
+                  >
+                    {c.id}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Education */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
+        className="flex flex-col gap-4"
+      >
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">Education</h2>
+        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex items-start justify-between gap-4">
+          <div>
+            <p className="font-semibold text-[var(--color-text)]">University of Seoul</p>
+            <p className="text-sm text-[var(--color-accent)] mt-0.5">B.S. in Computer Science and Engineering</p>
+          </div>
+          <span className="shrink-0 text-xs text-[var(--color-muted)]">18.03 ~ 25.02</span>
+        </div>
+      </motion.section>
+
+      {/* Wakatime Stats */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="flex flex-col gap-4"
+      >
+        <div className="flex items-baseline gap-2">
+          <h2 className="text-xl font-semibold text-[var(--color-text)]">Coding Stats</h2>
+          <span className="text-xs text-[var(--color-muted)]">via WakaTime · Oct 2024 – May 2026 · 1,065 hrs</span>
+        </div>
+        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex flex-col gap-3">
+          {WAKA_STATS.map((s) => (
+            <div key={s.lang} className="flex items-center gap-3">
+              <span className="w-24 shrink-0 text-sm text-[var(--color-text)]">{s.lang}</span>
+              <div className="flex-1 h-2 rounded-full bg-[var(--color-border)] overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-[var(--color-accent)]"
+                  style={{ width: `${(s.pct / 60) * 100}%` }}
+                />
+              </div>
+              <span className="w-14 shrink-0 text-right text-xs text-[var(--color-muted)]">
+                {s.pct}%
+              </span>
+            </div>
           ))}
         </div>
       </motion.section>
