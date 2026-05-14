@@ -55,6 +55,7 @@ function PostDetailPage() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
         className="prose dark:prose-invert max-w-none prose-a:text-[var(--color-accent)] prose-a:no-underline hover:prose-a:underline prose-code:before:content-none prose-code:after:content-none prose-code:rounded prose-code:bg-[var(--color-surface)] prose-code:px-1.5 prose-code:py-0.5 prose-code:font-normal"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: server-rendered markdown HTML is trusted
         dangerouslySetInnerHTML={{ __html: post.html }}
       />
 

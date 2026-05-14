@@ -99,6 +99,7 @@ function GomokuPage() {
               const isLast = lastMove?.[0] === r && lastMove?.[1] === c;
               return (
                 <button
+                  // biome-ignore lint/suspicious/noArrayIndexKey: board coordinates are stable keys, not list indices
                   key={`${r}-${c}`}
                   type="button"
                   onClick={() => handleClick(r, c)}
