@@ -47,3 +47,28 @@
     font-family: "JetBrains Mono", "Fira Code", monospace;
   }
 }
+
+/* ── Shiki code block overrides ─────────────────────────────────────────── */
+
+/* shiki sets background on <pre> via inline style; let it own the bg */
+.prose pre {
+  padding: 0;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+/* padding + scroll live here so the shiki bg fills edge-to-edge */
+.prose .shiki {
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+}
+
+/* prose-code adds background/padding for inline <code>; reset inside <pre> */
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.875em;
+  color: inherit;
+}
