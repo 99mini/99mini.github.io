@@ -1,6 +1,6 @@
+import { SEO } from "@/components/SEO";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { SEO } from "@/components/SEO";
 
 export const Route = createFileRoute("/about")({
   component: AboutPage,
@@ -19,15 +19,24 @@ const EXPERIENCES = [
     role: "Frontend Engineer — 메이퓨어팀",
     period: "25.08.18 ~ 26.01.13",
     tags: ["react", "typescript", "next.js", "i18next", "emotion", "antd"],
-    description: "Improving Medical Website SEO and Internationalization (i18n)",
+    description:
+      "Improving Medical Website SEO and Internationalization (i18n)",
   },
   {
     company: "오늘의웹툰 (Webtoon today)",
     companyUrl: "https://webtoon.today/",
     role: "Software Engineer — 성장팀",
     period: "24.02.06 ~ 24.09.03",
-    tags: ["react", "typescript", "sass(scss)", "recoil", "storybook", "rollup"],
-    description: "Webtoon Metric Development: Webtoon specific marketing solution (B2B SaaS)",
+    tags: [
+      "react",
+      "typescript",
+      "sass(scss)",
+      "recoil",
+      "storybook",
+      "rollup",
+    ],
+    description:
+      "Webtoon Metric Development: Webtoon specific marketing solution (B2B SaaS)",
   },
   {
     company: "오늘의웹툰 (Webtoontoday) — ICT 인턴",
@@ -45,7 +54,14 @@ const PROJECTS = [
     status: "Maintenance suspended",
     description: "Platform application for selling side dish store inventory",
     note: "Capstone Design Excellence Award (25.01.03)",
-    tags: ["react-native", "typescript", "emotion", "react-query", "zustand", "react"],
+    tags: [
+      "react-native",
+      "typescript",
+      "emotion",
+      "react-query",
+      "zustand",
+      "react",
+    ],
     githubUrl: "https://github.com/ummgoban",
     siteUrl: "https://ummgoban.github.io/",
   },
@@ -53,7 +69,8 @@ const PROJECTS = [
     name: "Judo Club Homepage",
     period: "22.12 ~ 23.02",
     status: "In active development",
-    description: "Webpage of the Judo Club (Jiho) — SSR using Express and React",
+    description:
+      "Webpage of the Judo Club (Jiho) — SSR using Express and React",
     note: null,
     tags: ["react", "typescript", "vite", "tailwindcss", "express"],
     githubUrl: "https://github.com/uos-judo-jiho",
@@ -74,26 +91,26 @@ const OPEN_SOURCE = [
     repo: "modern-agile-team/modern-kit",
     url: "https://github.com/modern-agile-team/modern-kit",
     contributions: [
-      { id: "#510", url: "https://github.com/modern-agile-team/modern-kit/pull/510" },
-      { id: "#521", url: "https://github.com/modern-agile-team/modern-kit/pull/521" },
+      {
+        id: "#510",
+        url: "https://github.com/modern-agile-team/modern-kit/pull/510",
+      },
+      {
+        id: "#521",
+        url: "https://github.com/modern-agile-team/modern-kit/pull/521",
+      },
     ],
   },
-];
-
-const WAKA_STATS = [
-  { lang: "TypeScript", hrs: "602 hrs 39 mins", pct: 56.59 },
-  { lang: "Python", hrs: "81 hrs 22 mins", pct: 7.64 },
-  { lang: "JavaScript", hrs: "72 hrs 5 mins", pct: 6.77 },
-  { lang: "Markdown", hrs: "68 hrs 10 mins", pct: 6.40 },
-  { lang: "JSON", hrs: "62 hrs 29 mins", pct: 5.87 },
-  { lang: "YAML", hrs: "32 hrs 59 mins", pct: 3.10 },
-  { lang: "Bash", hrs: "25 hrs 1 min", pct: 2.35 },
 ];
 
 export default function AboutPage() {
   return (
     <div className="flex flex-col gap-12">
-      <SEO title="About" description="99mini 소개, 경력, 프로젝트 정보" path="/about" />
+      <SEO
+        title="About"
+        description="99mini 소개, 경력, 프로젝트 정보"
+        path="/about"
+      />
 
       {/* Intro */}
       <motion.section
@@ -101,7 +118,9 @@ export default function AboutPage() {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col gap-3"
       >
-        <h1 className="text-3xl font-bold text-[var(--color-text)]">Young Min Kim</h1>
+        <h1 className="text-3xl font-bold text-[var(--color-text)]">
+          Young Min Kim
+        </h1>
         <p className="text-lg text-[var(--color-accent)] font-medium">99mini</p>
         <p className="text-[var(--color-muted)] leading-relaxed">
           Frontend Engineer. Interested in Functional Programming.
@@ -125,7 +144,9 @@ export default function AboutPage() {
         transition={{ delay: 0.1 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">Work Experience</h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">
+          Work Experience
+        </h2>
         <div className="flex flex-col gap-3">
           {EXPERIENCES.map((exp) => (
             <div
@@ -144,11 +165,17 @@ export default function AboutPage() {
                       {exp.company} ↗
                     </a>
                   ) : (
-                    <p className="font-semibold text-[var(--color-text)]">{exp.company}</p>
+                    <p className="font-semibold text-[var(--color-text)]">
+                      {exp.company}
+                    </p>
                   )}
-                  <p className="text-sm text-[var(--color-accent)]">{exp.role}</p>
+                  <p className="text-sm text-[var(--color-accent)]">
+                    {exp.role}
+                  </p>
                   {exp.description && (
-                    <p className="mt-1 text-sm text-[var(--color-muted)]">{exp.description}</p>
+                    <p className="mt-1 text-sm text-[var(--color-muted)]">
+                      {exp.description}
+                    </p>
                   )}
                   <div className="mt-2 flex flex-wrap gap-1">
                     {exp.tags.map((tag) => (
@@ -161,7 +188,9 @@ export default function AboutPage() {
                     ))}
                   </div>
                 </div>
-                <span className="shrink-0 text-xs text-[var(--color-muted)]">{exp.period}</span>
+                <span className="shrink-0 text-xs text-[var(--color-muted)]">
+                  {exp.period}
+                </span>
               </div>
             </div>
           ))}
@@ -175,7 +204,9 @@ export default function AboutPage() {
         transition={{ delay: 0.2 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">Projects</h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">
+          Projects
+        </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {PROJECTS.map((proj) => (
             <div
@@ -184,7 +215,9 @@ export default function AboutPage() {
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <h3 className="font-semibold text-[var(--color-text)]">{proj.name}</h3>
+                  <h3 className="font-semibold text-[var(--color-text)]">
+                    {proj.name}
+                  </h3>
                   <p className="text-xs text-[var(--color-muted)] mt-0.5">
                     {proj.period}
                     {proj.status && (
@@ -211,9 +244,13 @@ export default function AboutPage() {
                   </a>
                 </div>
               </div>
-              <p className="text-sm text-[var(--color-muted)]">{proj.description}</p>
+              <p className="text-sm text-[var(--color-muted)]">
+                {proj.description}
+              </p>
               {proj.note && (
-                <p className="text-xs text-[var(--color-accent)]">🏆 {proj.note}</p>
+                <p className="text-xs text-[var(--color-accent)]">
+                  🏆 {proj.note}
+                </p>
               )}
               <div className="flex flex-wrap gap-1 mt-auto">
                 {proj.tags.map((tag) => (
@@ -237,7 +274,9 @@ export default function AboutPage() {
         transition={{ delay: 0.3 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">Open Source</h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">
+          Open Source
+        </h2>
         <div className="flex flex-col gap-3">
           {OPEN_SOURCE.map((item) => (
             <div
@@ -277,42 +316,21 @@ export default function AboutPage() {
         transition={{ delay: 0.35 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">Education</h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">
+          Education
+        </h2>
         <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex items-start justify-between gap-4">
           <div>
-            <p className="font-semibold text-[var(--color-text)]">University of Seoul</p>
-            <p className="text-sm text-[var(--color-accent)] mt-0.5">B.S. in Computer Science and Engineering</p>
+            <p className="font-semibold text-[var(--color-text)]">
+              University of Seoul
+            </p>
+            <p className="text-sm text-[var(--color-accent)] mt-0.5">
+              B.S. in Computer Science and Engineering
+            </p>
           </div>
-          <span className="shrink-0 text-xs text-[var(--color-muted)]">18.03 ~ 25.02</span>
-        </div>
-      </motion.section>
-
-      {/* Wakatime Stats */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="flex flex-col gap-4"
-      >
-        <div className="flex items-baseline gap-2">
-          <h2 className="text-xl font-semibold text-[var(--color-text)]">Coding Stats</h2>
-          <span className="text-xs text-[var(--color-muted)]">via WakaTime · Oct 2024 – May 2026 · 1,065 hrs</span>
-        </div>
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex flex-col gap-3">
-          {WAKA_STATS.map((s) => (
-            <div key={s.lang} className="flex items-center gap-3">
-              <span className="w-24 shrink-0 text-sm text-[var(--color-text)]">{s.lang}</span>
-              <div className="flex-1 h-2 rounded-full bg-[var(--color-border)] overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-[var(--color-accent)]"
-                  style={{ width: `${(s.pct / 60) * 100}%` }}
-                />
-              </div>
-              <span className="w-14 shrink-0 text-right text-xs text-[var(--color-muted)]">
-                {s.pct}%
-              </span>
-            </div>
-          ))}
+          <span className="shrink-0 text-xs text-[var(--color-muted)]">
+            18.03 ~ 25.02
+          </span>
         </div>
       </motion.section>
     </div>
