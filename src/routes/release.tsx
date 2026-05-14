@@ -2,78 +2,100 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import releases from "virtual:releases";
 import { SEO } from "@/components/SEO";
+import type { GithubRelease } from "@/types";
 
 export const Route = createFileRoute("/release")({
   loader: () => ({ releases }),
   component: ReleasePage,
 });
 
+function formatDate(iso: string | null) {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 function ReleasePage() {
   const { releases } = Route.useLoaderData();
 
   return (
     <div className="flex flex-col gap-8">
-      <SEO title="Release" description="99mini GitHub 릴리즈 히스토리" path="/release" />
-      <div className="flex flex-col gap-2">
+      <SEO title="Release" description="99mini 릴리즈 히스토리" path="/release" />
+      <div className="flex flex-col gap-1">
         <h1 className="text-3xl font-bold text-[var(--color-text)]">Release</h1>
-        <p className="text-[var(--color-muted)]">GitHub 릴리즈 히스토리</p>
+        <p className="text-[var(--color-muted)]">태그 기반 릴리즈 히스토리</p>
       </div>
 
       {releases.length === 0 ? (
-        <p className="text-[var(--color-muted)]">
-          릴리즈 정보를 불러올 수 없습니다.
-        </p>
+        <p className="text-[var(--color-muted)]">릴리즈 정보를 불러올 수 없습니다.</p>
       ) : (
-        <ol className="relative border-l border-[var(--color-border)]">
-          {releases.map((pr, i) => (
-            <motion.li
-              key={pr.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="mb-8 ml-6"
-            >
-              <span className="absolute -left-2 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--color-accent)] ring-4 ring-[var(--color-bg)]" />
-              <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-                <div className="mb-1 flex items-center gap-2">
-                  <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium text-purple-400">
-                    #{pr.number}
-                  </span>
-                  <time className="text-xs text-[var(--color-muted)]">
-                    {pr.merged_at
-                      ? new Date(pr.merged_at).toLocaleDateString("ko-KR")
-                      : ""}
-                  </time>
-                </div>
-                <a
-                  href={pr.html_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors"
-                >
-                  {pr.title}
-                </a>
-                {pr.labels.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {pr.labels.map((label) => (
-                      <span
-                        key={label.id}
-                        className="rounded-md px-1.5 py-0.5 text-xs"
-                        style={{
-                          backgroundColor: `#${label.color}22`,
-                          color: `#${label.color}`,
-                        }}
-                      >
-                        {label.name}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </motion.li>
+        <ol className="relative border-l border-[var(--color-border)] flex flex-col gap-0">
+          {releases.map((release, i) => (
+            <ReleaseItem key={release.id} release={release} index={i} />
           ))}
         </ol>
       )}
     </div>
+  );
+}
+
+function ReleaseItem({ release, index }: { release: GithubRelease; index: number }) {
+  const lines = (release.body ?? "").split("\n").filter((l) => l.trim() !== "");
+
+  return (
+    <motion.li
+      initial={{ opacity: 0, x: -16 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.06 }}
+      className="mb-8 ml-6"
+    >
+      <span className="absolute -left-2 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--color-accent)] ring-4 ring-[var(--color-bg)]" />
+
+      <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex flex-col gap-3">
+        {/* header */}
+        <div className="flex flex-wrap items-center gap-2">
+          <a
+            href={release.html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full bg-[var(--color-accent)]/15 px-2.5 py-0.5 text-sm font-semibold text-[var(--color-accent)] hover:bg-[var(--color-accent)]/25 transition-colors font-mono"
+          >
+            {release.tag_name}
+          </a>
+          {release.prerelease && (
+            <span className="rounded-full bg-yellow-500/15 px-2 py-0.5 text-xs font-medium text-yellow-500">
+              pre-release
+            </span>
+          )}
+          <time className="ml-auto text-xs text-[var(--color-muted)]">
+            {formatDate(release.published_at)}
+          </time>
+        </div>
+
+        {/* release name (if different from tag) */}
+        {release.name && release.name !== release.tag_name && (
+          <p className="font-medium text-[var(--color-text)]">{release.name}</p>
+        )}
+
+        {/* release notes */}
+        {lines.length > 0 && (
+          <ul className="flex flex-col gap-1">
+            {lines.map((line, j) => {
+              const clean = line.replace(/^[-*]\s*/, "").trim();
+              if (!clean) return null;
+              return (
+                <li key={j} className="flex items-start gap-2 text-sm text-[var(--color-muted)]">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]/50" />
+                  <span>{clean}</span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+    </motion.li>
   );
 }

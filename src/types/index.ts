@@ -16,28 +16,15 @@ export type Post = PostFrontmatter & {
   html: string;
 };
 
-export const GithubPRSchema = z.object({
+export const GithubReleaseSchema = z.object({
   id: z.number(),
-  number: z.number(),
-  title: z.string(),
-  html_url: z.string(),
-  state: z.enum(["open", "closed"]),
-  created_at: z.string(),
-  closed_at: z.string().nullable(),
-  merged_at: z.string().nullable(),
+  tag_name: z.string(),
+  name: z.string().nullable(),
   body: z.string().nullable(),
-  labels: z.array(
-    z.object({
-      id: z.number(),
-      name: z.string(),
-      color: z.string(),
-    }),
-  ),
-  user: z.object({
-    login: z.string(),
-    avatar_url: z.string(),
-    html_url: z.string(),
-  }),
+  html_url: z.string(),
+  published_at: z.string().nullable(),
+  draft: z.boolean(),
+  prerelease: z.boolean(),
 });
 
-export type GithubPR = z.infer<typeof GithubPRSchema>;
+export type GithubRelease = z.infer<typeof GithubReleaseSchema>;

@@ -5,7 +5,7 @@ import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 import { resolve } from "node:path";
 import { readdirSync, readFileSync } from "node:fs";
 import { z } from "zod";
-import { GithubPRSchema, PostFrontmatterSchema } from "./src/types/index.ts";
+import { GithubReleaseSchema, PostFrontmatterSchema } from "./src/types/index.ts";
 
 // ─── virtual:releases ────────────────────────────────────────────────────────
 
@@ -26,17 +26,13 @@ function githubReleasesPlugin(): Plugin {
       if (cache) return cache;
 
       try {
-        const url = `https://api.github.com/repos/${REPO}/pulls?state=closed&per_page=50`;
+        const url = `https://api.github.com/repos/${REPO}/releases?per_page=50`;
         const res = await fetch(url, { headers: { Accept: "application/vnd.github+json" } });
         const raw = res.ok ? await res.json() : [];
         const releases = z
-          .array(GithubPRSchema)
+          .array(GithubReleaseSchema)
           .parse(raw)
-          .filter(
-            (pr) =>
-              pr.merged_at !== null &&
-              (pr.labels.length > 0 || pr.title.toLowerCase().startsWith("release:")),
-          );
+          .filter((r) => !r.draft);
         cache = `export default ${JSON.stringify(releases)}`;
       } catch {
         cache = "export default []";
