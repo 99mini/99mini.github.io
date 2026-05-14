@@ -12,6 +12,10 @@
       }
     }
   },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json"]
+  },
   "linter": {
     "enabled": true,
     "rules": {
