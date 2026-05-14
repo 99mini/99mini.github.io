@@ -1,7 +1,7 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { getPostBySlug, getAdjacentPosts, getRelatedPosts } from "@/lib/posts";
 import { SEO } from "@/components/SEO";
+import { getAdjacentPosts, getPostBySlug, getRelatedPosts } from "@/lib/posts";
 import type { Post } from "@/types";
 
 export const Route = createFileRoute("/post/$slug")({
@@ -65,11 +65,7 @@ function PostDetailPage() {
   );
 }
 
-function PostNavigation({
-  adjacent,
-}: {
-  adjacent: { prev: Post | null; next: Post | null };
-}) {
+function PostNavigation({ adjacent }: { adjacent: { prev: Post | null; next: Post | null } }) {
   const { prev, next } = adjacent;
   if (!prev && !next) return null;
 

@@ -1,6 +1,6 @@
-import { SEO } from "@/components/SEO";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
+import { SEO } from "@/components/SEO";
 
 export const Route = createFileRoute("/about")({
   component: AboutPage,
@@ -19,24 +19,15 @@ const EXPERIENCES = [
     role: "Frontend Engineer — 메이퓨어팀",
     period: "25.08.18 ~ 26.01.13",
     tags: ["react", "typescript", "next.js", "i18next", "emotion", "antd"],
-    description:
-      "Improving Medical Website SEO and Internationalization (i18n)",
+    description: "Improving Medical Website SEO and Internationalization (i18n)",
   },
   {
     company: "오늘의웹툰 (Webtoon today)",
     companyUrl: "https://webtoon.today/",
     role: "Software Engineer — 성장팀",
     period: "24.02.06 ~ 24.09.03",
-    tags: [
-      "react",
-      "typescript",
-      "sass(scss)",
-      "recoil",
-      "storybook",
-      "rollup",
-    ],
-    description:
-      "Webtoon Metric Development: Webtoon specific marketing solution (B2B SaaS)",
+    tags: ["react", "typescript", "sass(scss)", "recoil", "storybook", "rollup"],
+    description: "Webtoon Metric Development: Webtoon specific marketing solution (B2B SaaS)",
   },
   {
     company: "오늘의웹툰 (Webtoontoday) — ICT 인턴",
@@ -54,14 +45,7 @@ const PROJECTS = [
     status: "Maintenance suspended",
     description: "Platform application for selling side dish store inventory",
     note: "Capstone Design Excellence Award (25.01.03)",
-    tags: [
-      "react-native",
-      "typescript",
-      "emotion",
-      "react-query",
-      "zustand",
-      "react",
-    ],
+    tags: ["react-native", "typescript", "emotion", "react-query", "zustand", "react"],
     githubUrl: "https://github.com/ummgoban",
     siteUrl: "https://ummgoban.github.io/",
   },
@@ -69,8 +53,7 @@ const PROJECTS = [
     name: "Judo Club Homepage",
     period: "22.12 ~ 23.02",
     status: "In active development",
-    description:
-      "Webpage of the Judo Club (Jiho) — SSR using Express and React",
+    description: "Webpage of the Judo Club (Jiho) — SSR using Express and React",
     note: null,
     tags: ["react", "typescript", "vite", "tailwindcss", "express"],
     githubUrl: "https://github.com/uos-judo-jiho",
@@ -106,11 +89,7 @@ const OPEN_SOURCE = [
 export default function AboutPage() {
   return (
     <div className="flex flex-col gap-12">
-      <SEO
-        title="About"
-        description="99mini 소개, 경력, 프로젝트 정보"
-        path="/about"
-      />
+      <SEO title="About" description="99mini 소개, 경력, 프로젝트 정보" path="/about" />
 
       {/* Intro */}
       <motion.section
@@ -118,9 +97,7 @@ export default function AboutPage() {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col gap-3"
       >
-        <h1 className="text-3xl font-bold text-[var(--color-text)]">
-          Young Min Kim
-        </h1>
+        <h1 className="text-3xl font-bold text-[var(--color-text)]">Young Min Kim</h1>
         <p className="text-lg text-[var(--color-accent)] font-medium">99mini</p>
         <p className="text-[var(--color-muted)] leading-relaxed">
           Frontend Engineer. Interested in Functional Programming.
@@ -144,9 +121,7 @@ export default function AboutPage() {
         transition={{ delay: 0.1 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">
-          Work Experience
-        </h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">Work Experience</h2>
         <div className="flex flex-col gap-3">
           {EXPERIENCES.map((exp) => (
             <div
@@ -165,17 +140,11 @@ export default function AboutPage() {
                       {exp.company} ↗
                     </a>
                   ) : (
-                    <p className="font-semibold text-[var(--color-text)]">
-                      {exp.company}
-                    </p>
+                    <p className="font-semibold text-[var(--color-text)]">{exp.company}</p>
                   )}
-                  <p className="text-sm text-[var(--color-accent)]">
-                    {exp.role}
-                  </p>
+                  <p className="text-sm text-[var(--color-accent)]">{exp.role}</p>
                   {exp.description && (
-                    <p className="mt-1 text-sm text-[var(--color-muted)]">
-                      {exp.description}
-                    </p>
+                    <p className="mt-1 text-sm text-[var(--color-muted)]">{exp.description}</p>
                   )}
                   <div className="mt-2 flex flex-wrap gap-1">
                     {exp.tags.map((tag) => (
@@ -188,9 +157,7 @@ export default function AboutPage() {
                     ))}
                   </div>
                 </div>
-                <span className="shrink-0 text-xs text-[var(--color-muted)]">
-                  {exp.period}
-                </span>
+                <span className="shrink-0 text-xs text-[var(--color-muted)]">{exp.period}</span>
               </div>
             </div>
           ))}
@@ -204,9 +171,7 @@ export default function AboutPage() {
         transition={{ delay: 0.2 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">
-          Projects
-        </h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">Projects</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {PROJECTS.map((proj) => (
             <div
@@ -215,14 +180,10 @@ export default function AboutPage() {
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <h3 className="font-semibold text-[var(--color-text)]">
-                    {proj.name}
-                  </h3>
+                  <h3 className="font-semibold text-[var(--color-text)]">{proj.name}</h3>
                   <p className="text-xs text-[var(--color-muted)] mt-0.5">
                     {proj.period}
-                    {proj.status && (
-                      <span className="ml-1.5 italic">· {proj.status}</span>
-                    )}
+                    {proj.status && <span className="ml-1.5 italic">· {proj.status}</span>}
                   </p>
                 </div>
                 <div className="flex gap-2 shrink-0">
@@ -244,14 +205,8 @@ export default function AboutPage() {
                   </a>
                 </div>
               </div>
-              <p className="text-sm text-[var(--color-muted)]">
-                {proj.description}
-              </p>
-              {proj.note && (
-                <p className="text-xs text-[var(--color-accent)]">
-                  🏆 {proj.note}
-                </p>
-              )}
+              <p className="text-sm text-[var(--color-muted)]">{proj.description}</p>
+              {proj.note && <p className="text-xs text-[var(--color-accent)]">🏆 {proj.note}</p>}
               <div className="flex flex-wrap gap-1 mt-auto">
                 {proj.tags.map((tag) => (
                   <code
@@ -274,9 +229,7 @@ export default function AboutPage() {
         transition={{ delay: 0.3 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">
-          Open Source
-        </h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">Open Source</h2>
         <div className="flex flex-col gap-3">
           {OPEN_SOURCE.map((item) => (
             <div
@@ -316,21 +269,15 @@ export default function AboutPage() {
         transition={{ delay: 0.35 }}
         className="flex flex-col gap-4"
       >
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">
-          Education
-        </h2>
+        <h2 className="text-xl font-semibold text-[var(--color-text)]">Education</h2>
         <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex items-start justify-between gap-4">
           <div>
-            <p className="font-semibold text-[var(--color-text)]">
-              University of Seoul
-            </p>
+            <p className="font-semibold text-[var(--color-text)]">University of Seoul</p>
             <p className="text-sm text-[var(--color-accent)] mt-0.5">
               B.S. in Computer Science and Engineering
             </p>
           </div>
-          <span className="shrink-0 text-xs text-[var(--color-muted)]">
-            18.03 ~ 25.02
-          </span>
+          <span className="shrink-0 text-xs text-[var(--color-muted)]">18.03 ~ 25.02</span>
         </div>
       </motion.section>
     </div>

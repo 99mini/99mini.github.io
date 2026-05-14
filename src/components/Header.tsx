@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 
 const NAV = [
@@ -13,7 +13,16 @@ const NAV = [
 
 function SunIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <circle cx="12" cy="12" r="4" />
       <line x1="12" y1="2" x2="12" y2="4" />
       <line x1="12" y1="20" x2="12" y2="22" />
@@ -29,7 +38,16 @@ function SunIcon() {
 
 function MoonIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   );
@@ -95,9 +113,15 @@ export function Header() {
             onClick={() => setOpen((v) => !v)}
             aria-label="메뉴 열기"
           >
-            <span className={`h-0.5 w-5 bg-[var(--color-text)] transition-transform ${open ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`h-0.5 w-5 bg-[var(--color-text)] transition-opacity ${open ? "opacity-0" : ""}`} />
-            <span className={`h-0.5 w-5 bg-[var(--color-text)] transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+            <span
+              className={`h-0.5 w-5 bg-[var(--color-text)] transition-transform ${open ? "translate-y-2 rotate-45" : ""}`}
+            />
+            <span
+              className={`h-0.5 w-5 bg-[var(--color-text)] transition-opacity ${open ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`h-0.5 w-5 bg-[var(--color-text)] transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`}
+            />
           </button>
         </div>
       </nav>

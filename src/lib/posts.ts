@@ -25,7 +25,5 @@ export function getRelatedPosts(slug: string, limit = 3): Post[] {
   const current = posts.find((p) => p.slug === slug);
   if (!current || current.tags.length === 0) return [];
   const tagSet = new Set(current.tags);
-  return posts
-    .filter((p) => p.slug !== slug && p.tags.some((t) => tagSet.has(t)))
-    .slice(0, limit);
+  return posts.filter((p) => p.slug !== slug && p.tags.some((t) => tagSet.has(t))).slice(0, limit);
 }

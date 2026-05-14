@@ -88,10 +88,7 @@ function HomePage() {
         >
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-[var(--color-text)]">최근 포스트</h2>
-            <Link
-              to="/post"
-              className="text-sm text-[var(--color-accent)] hover:underline"
-            >
+            <Link to="/post" className="text-sm text-[var(--color-accent)] hover:underline">
               전체 보기 →
             </Link>
           </div>
