@@ -27,13 +27,10 @@ function HomePage() {
           <span className="text-sm font-medium text-[var(--color-accent)]">안녕하세요 👋</span>
           <h1 className="text-4xl font-bold tracking-tight text-[var(--color-text)] md:text-5xl">
             Young Min Kim
-            <span className="block text-2xl font-medium text-[var(--color-muted)] mt-1 md:text-3xl">
-              99mini
-            </span>
+            <span className="block text-2xl font-medium text-[var(--color-muted)] mt-1 md:text-3xl">99mini</span>
           </h1>
           <p className="max-w-xl text-lg text-[var(--color-muted)] leading-relaxed">
-            Frontend Engineer at{" "}
-            <span className="text-[var(--color-text)] font-medium">Toss Bank</span>
+            Frontend Engineer at <span className="text-[var(--color-text)] font-medium">Toss Bank</span>
             .
             <br />
             Interested in Functional Programming and building delightful web experiences.

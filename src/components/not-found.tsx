@@ -12,12 +12,8 @@ export function NotFound() {
       <SEO title="404" description="페이지를 찾을 수 없습니다." />
       <p className="text-7xl font-bold text-[var(--color-accent)]">404</p>
       <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold text-[var(--color-text)]">
-          페이지를 찾을 수 없습니다
-        </h1>
-        <p className="text-[var(--color-muted)]">
-          요청하신 페이지가 존재하지 않거나 이동되었습니다.
-        </p>
+        <h1 className="text-2xl font-semibold text-[var(--color-text)]">페이지를 찾을 수 없습니다</h1>
+        <p className="text-[var(--color-muted)]">요청하신 페이지가 존재하지 않거나 이동되었습니다.</p>
       </div>
       <Link
         to="/"

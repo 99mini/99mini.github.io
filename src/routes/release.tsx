@@ -69,9 +69,7 @@ function ReleaseItem({ release, index }: { release: GithubRelease; index: number
               pre-release
             </span>
           )}
-          <time className="ml-auto text-xs text-[var(--color-muted)]">
-            {formatDate(release.published_at)}
-          </time>
+          <time className="ml-auto text-xs text-[var(--color-muted)]">{formatDate(release.published_at)}</time>
         </div>
 
         {/* release name (if different from tag) */}
@@ -86,10 +84,7 @@ function ReleaseItem({ release, index }: { release: GithubRelease; index: number
               const clean = line.replace(/^[-*]\s*/, "").trim();
               if (!clean) return null;
               return (
-                <li
-                  key={clean}
-                  className="flex items-start gap-2 text-sm text-[var(--color-muted)]"
-                >
+                <li key={clean} className="flex items-start gap-2 text-sm text-[var(--color-muted)]">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]/50" />
                   <span>{clean}</span>
                 </li>

@@ -92,11 +92,7 @@ export default function AboutPage() {
       <SEO title="About" description="99mini 소개, 경력, 프로젝트 정보" path="/about" />
 
       {/* Intro */}
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col gap-3"
-      >
+      <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-3">
         <h1 className="text-3xl font-bold text-[var(--color-text)]">Young Min Kim</h1>
         <p className="text-lg text-[var(--color-accent)] font-medium">99mini</p>
         <p className="text-[var(--color-muted)] leading-relaxed">
@@ -143,9 +139,7 @@ export default function AboutPage() {
                     <p className="font-semibold text-[var(--color-text)]">{exp.company}</p>
                   )}
                   <p className="text-sm text-[var(--color-accent)]">{exp.role}</p>
-                  {exp.description && (
-                    <p className="mt-1 text-sm text-[var(--color-muted)]">{exp.description}</p>
-                  )}
+                  {exp.description && <p className="mt-1 text-sm text-[var(--color-muted)]">{exp.description}</p>}
                   <div className="mt-2 flex flex-wrap gap-1">
                     {exp.tags.map((tag) => (
                       <code
@@ -273,9 +267,7 @@ export default function AboutPage() {
         <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 flex items-start justify-between gap-4">
           <div>
             <p className="font-semibold text-[var(--color-text)]">University of Seoul</p>
-            <p className="text-sm text-[var(--color-accent)] mt-0.5">
-              B.S. in Computer Science and Engineering
-            </p>
+            <p className="text-sm text-[var(--color-accent)] mt-0.5">B.S. in Computer Science and Engineering</p>
           </div>
           <span className="shrink-0 text-xs text-[var(--color-muted)]">18.03 ~ 25.02</span>
         </div>

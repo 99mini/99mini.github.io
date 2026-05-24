@@ -71,10 +71,7 @@ function PostNavigation({ adjacent }: { adjacent: { prev: Post | null; next: Pos
   if (!prev && !next) return null;
 
   return (
-    <nav
-      className="grid grid-cols-2 gap-4 border-t border-[var(--color-border)] pt-8"
-      aria-label="포스트 탐색"
-    >
+    <nav className="grid grid-cols-2 gap-4 border-t border-[var(--color-border)] pt-8" aria-label="포스트 탐색">
       <div>
         {prev && (
           <Link

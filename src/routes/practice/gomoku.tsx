@@ -116,9 +116,7 @@ function GomokuPage() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       className={`relative z-10 h-5 w-5 rounded-full shadow-md ${
-                        cell === "black"
-                          ? "bg-gray-900 ring-1 ring-gray-600"
-                          : "bg-white ring-1 ring-gray-300"
+                        cell === "black" ? "bg-gray-900 ring-1 ring-gray-600" : "bg-white ring-1 ring-gray-300"
                       } ${isLast ? "ring-2 ring-[var(--color-accent)]" : ""}`}
                     />
                   )}

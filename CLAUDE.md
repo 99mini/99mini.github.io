@@ -20,12 +20,16 @@ pnpm lint:fix     # biome check --write src/
 
 All external data is fetched/processed at **Vite build time**, not at runtime. Two custom Vite plugins in `vite.config.ts` expose this data as virtual modules:
 
-| Virtual module | Plugin | Source |
-|---|---|---|
-| `virtual:posts` | `virtualPostsPlugin` | `content/posts/*.md` — parsed with gray-matter, rendered to HTML with unified+shiki |
+| Virtual module     | Plugin                 | Source                                                                                             |
+| ------------------ | ---------------------- | -------------------------------------------------------------------------------------------------- |
+| `virtual:posts`    | `virtualPostsPlugin`   | `content/posts/*.md` — parsed with gray-matter, rendered to HTML with unified+shiki                |
 | `virtual:releases` | `githubReleasesPlugin` | GitHub API (`/repos/99mini/99mini.github.io/pulls`) — filtered by label or `release:` title prefix |
 
 **Why this matters:** `gray-matter` and Node.js `fs` cannot run in the browser. Any attempt to import these in `src/` will break at runtime. All markdown/file processing must stay in `vite.config.ts` or `scripts/`.
+
+### File Naming Conventions
+
+- kebab-case for files and directories (`src/routes/blog-post/index.tsx`, not `src/routes/BlogPost/index.tsx`)
 
 ### SSG flow
 
@@ -46,20 +50,22 @@ Adding a new static route requires updating the `routes` array in `scripts/prere
 TanStack Router with file-based routing (`src/routes/`). `@tanstack/router-vite-plugin` auto-generates `src/routeTree.gen.ts` — never edit this file manually.
 
 Route file conventions:
+
 - `__root.tsx` — root layout (Header, Footer, notFoundComponent)
 - `index.tsx` — index route for a segment
 - `$slug.tsx` — dynamic param (accessed via `Route.useLoaderData()`)
 
 ### Theming
 
-Dark/light mode uses CSS custom properties on `:root` vs `:root.dark`. The `dark` class is applied to `<html>` before React hydrates via an inline script in `index.html` (prevents FOUC). `useTheme` hook (`src/hooks/useTheme.ts`) reads from the DOM and persists to `localStorage`.
+Dark/light mode uses CSS custom properties on `:root` vs `:root.dark`. The `dark` class is applied to `<html>` before React hydrates via an inline script in `index.html` (prevents FOUC). `useTheme` hook (`src/hooks/use-theme.ts`) reads from the DOM and persists to `localStorage`.
 
 TailwindCSS v4 is configured CSS-first in `src/styles/global.css` — no `tailwind.config.ts`. Dark variant is set via `@custom-variant dark (&:where(.dark *))`.
 
 ### SEO
 
 Two-layer approach:
-1. `<SEO>` component (`src/components/SEO.tsx`) — updates `document.title` and meta tags client-side on each navigation
+
+1. `<seo>` component (`src/scripts/seo.tsx`) — updates `document.title` and meta tags client-side on each navigation
 2. `scripts/prerender.ts` — injects static meta tags into each HTML file at build time for crawlers
 
 ### Types & validation
@@ -69,6 +75,7 @@ Zod schemas in `src/types/index.ts` are the single source of truth for `Post` an
 ## Adding content
 
 **New blog post:** create `content/posts/{slug}.md` with frontmatter:
+
 ```yaml
 ---
 title: "..."

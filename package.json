@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "biome check src/",
     "lint:fix": "biome check --write src/",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
   "packageManager": "pnpm@10.28.2",

@@ -117,9 +117,7 @@ export function Header() {
             <span
               className={`h-0.5 w-5 bg-[var(--color-text)] transition-transform ${open ? "translate-y-2 rotate-45" : ""}`}
             />
-            <span
-              className={`h-0.5 w-5 bg-[var(--color-text)] transition-opacity ${open ? "opacity-0" : ""}`}
-            />
+            <span className={`h-0.5 w-5 bg-[var(--color-text)] transition-opacity ${open ? "opacity-0" : ""}`} />
             <span
               className={`h-0.5 w-5 bg-[var(--color-text)] transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`}
             />
