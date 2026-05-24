@@ -1,6 +1,8 @@
 {
-  "editor.minimap.maxColumn": 120,
-  "workbench.editor.tabSizingFixedMinWidth": 80,
-  "workbench.editor.tabSizingFixedMaxWidth": 180,
-  "prettier.printWidth": 160
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  }
 }
