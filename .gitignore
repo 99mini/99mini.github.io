@@ -9,5 +9,4 @@ pnpm-debug.log*
 .env.*
 !.env.example
 *.tsbuildinfo
-src/routeTree.gen.ts
 .pnpm-approve-builds.json
