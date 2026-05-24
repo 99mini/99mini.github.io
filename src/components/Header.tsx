@@ -1,13 +1,12 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "@/hooks/theme/use-theme";
 
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/post", label: "Blog" },
-  { to: "/release", label: "Release" },
   { to: "/practice", label: "Practice" },
 ] as const;
 
