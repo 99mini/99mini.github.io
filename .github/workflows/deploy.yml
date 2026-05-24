@@ -48,3 +48,20 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  tag:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create release tag
+        run: |
+          VERSION=$(jq -r .version package.json)
+          TIMESTAMP=$(date -u +'%y%m%d%H%M')
+          HASH=$(git rev-parse --short HEAD)
+          TAG="${VERSION}-${TIMESTAMP}-${HASH}"
+          git tag "$TAG"
+          git push origin "$TAG"
