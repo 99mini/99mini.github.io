@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { SEO } from "@/components/SEO";
+import { SEO } from "@/scripts/seo";
 
 export function NotFound() {
   return (

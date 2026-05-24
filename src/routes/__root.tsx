@@ -1,7 +1,7 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { NotFound } from "@/components/NotFound";
+import { Header } from "@/components/nav-header";
+import { NotFound } from "@/components/not-found";
 import { ThemeProvider } from "@/hooks/theme/theme-provider";
 
 import "@/styles/global.css";

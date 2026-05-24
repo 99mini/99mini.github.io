@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PostCard } from "@/components/PostCard";
-import { SEO } from "@/components/SEO";
+import { PostCard } from "@/components/post-card";
 import { getAllPosts } from "@/lib/posts";
+import { SEO } from "@/scripts/seo";
 
 export const Route = createFileRoute("/post/")({
   loader: () => ({ posts: getAllPosts() }),

@@ -1,7 +1,7 @@
 import releases from "virtual:releases";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { SEO } from "@/components/SEO";
+import { SEO } from "@/scripts/seo";
 import type { GithubRelease } from "@/types";
 
 export const Route = createFileRoute("/release")({

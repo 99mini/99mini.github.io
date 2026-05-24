@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { SEO } from "@/components/SEO";
+import { SEO } from "@/scripts/seo";
 
 export const Route = createFileRoute("/practice/")({
   component: PracticeIndexPage,

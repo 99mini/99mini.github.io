@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { SEO } from "@/components/SEO";
 import { getAllPosts } from "@/lib/posts";
+import { SEO } from "@/scripts/seo";
 import type { Post } from "@/types";
 
 export const Route = createFileRoute("/")({
@@ -33,7 +33,8 @@ function HomePage() {
           </h1>
           <p className="max-w-xl text-lg text-[var(--color-muted)] leading-relaxed">
             Frontend Engineer at{" "}
-            <span className="text-[var(--color-text)] font-medium">Toss Bank</span>.
+            <span className="text-[var(--color-text)] font-medium">Toss Bank</span>
+            .
             <br />
             Interested in Functional Programming and building delightful web experiences.
           </p>

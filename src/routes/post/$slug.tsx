@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { SEO } from "@/components/SEO";
 import { getAdjacentPosts, getPostBySlug, getRelatedPosts } from "@/lib/posts";
+import { SEO } from "@/scripts/seo";
 import type { Post } from "@/types";
 
 export const Route = createFileRoute("/post/$slug")({
