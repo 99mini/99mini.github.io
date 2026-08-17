@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "unicorn", "import", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "env": {
+    "browser": true,
+    "es2024": true
+  },
+  "ignorePatterns": ["dist/**", ".ssr/**", "src/routeTree.gen.ts"],
+  "rules": {
+    "typescript/consistent-type-imports": "error",
+    "react/react-in-jsx-scope": "off",
+    "unicorn/no-array-sort": "off",
+    "eslint/no-await-in-loop": "off",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css", "**/*.css.ts"] }]
+  }
+}
