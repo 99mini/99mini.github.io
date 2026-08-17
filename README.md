@@ -4,25 +4,44 @@ React + TanStack Router 기반 정적 사이트. 라우트마다 실제 HTML 을
 
 ## 스택
 
-| 영역       | 도구                                        |
-| ---------- | ------------------------------------------- |
-| 번들러     | Vite 8                                      |
-| 프레임워크 | React 19 + TanStack Router (file-based)     |
-| 언어       | TypeScript 7                                |
-| 스타일     | vanilla-extract                             |
-| 린트/포맷  | oxlint / oxfmt                              |
-| 유틸       | es-toolkit, es-hangul, ts-pattern, date-fns |
-| 오버레이   | overlay-kit                                 |
+| 영역        | 도구                                        |
+| ----------- | ------------------------------------------- |
+| 번들러      | Vite 8                                      |
+| 프레임워크  | React 19 + TanStack Router (file-based)     |
+| 언어        | TypeScript 7                                |
+| 스타일      | vanilla-extract                             |
+| 린트/포맷   | oxlint / oxfmt                              |
+| 유틸        | es-toolkit, es-hangul, ts-pattern, date-fns |
+| 오버레이    | overlay-kit                                 |
+| 런타임 관리 | mise (Node 24 LTS, pnpm 11)                 |
+
+## 시작하기
+
+[mise](https://mise.jdx.dev) 로 Node/pnpm 버전을 관리한다. `mise.toml` 이 로컬과 CI 양쪽의 단일 소스다.
+
+```bash
+mise trust     # 최초 1회 (mise 는 신뢰하지 않은 설정 파일을 실행하지 않는다)
+mise install   # mise.toml 에 적힌 node/pnpm 설치
+pnpm install
+```
+
+mise 없이 쓴다면 `mise.toml` 의 버전(Node 24.19.0 / pnpm 11.22.0)을 직접 맞추면 된다.
 
 ## 스크립트
 
 ```bash
-pnpm dev        # 개발 서버
-pnpm build      # 클라이언트 빌드 → 타입체크 → SSR 빌드 → 프리렌더
-pnpm preview    # 빌드 결과 확인
-pnpm lint       # oxlint
-pnpm format     # oxfmt
+pnpm dev          # 개발 서버
+pnpm build        # 클라이언트 빌드 → 타입체크 → SSR 빌드 → 프리렌더
+pnpm preview      # 빌드 결과 확인
+pnpm lint         # oxlint
+pnpm format       # oxfmt
+pnpm format:check # 포맷 검사 (CI 와 동일)
+pnpm typecheck    # tsc --noEmit
+
+mise run check    # lint + format:check + typecheck 한 번에
 ```
+
+> pnpm 버전은 `mise.toml` 과 `package.json` 의 `packageManager` 두 곳에 있다. 올릴 때 같이 올릴 것.
 
 ## 라우팅 / 배포 구조
 
