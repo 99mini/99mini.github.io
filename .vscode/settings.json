@@ -1,0 +1,4 @@
+{
+  "oxc.path.oxlint": "/path/to/oxc/apps/oxlint/dist/cli.js",
+  "oxc.path.oxfmt": "/path/to/oxc/apps/oxfmt/dist/cli.js"
+}
